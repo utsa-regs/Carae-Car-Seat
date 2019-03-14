@@ -19,7 +19,7 @@
 #define TX_POWERUP()   RF_WriteRegister(RF24_CONFIG, RF24_EN_CRC|RF24_CRCO|RF24_PWR_UP|RF24_PRIM_TX) /* enable 2 byte CRC, power up and set as PTX */
 #define RX_POWERUP()   RF_WriteRegister(RF24_CONFIG, RF24_EN_CRC|RF24_CRCO|RF24_PWR_UP|RF24_PRIM_RX) /* enable 2 byte CRC, power up and set as PRX */
 
-static const uint8_t TADDR[5] = {0x11, 0x22, 0x33, 0x44, 0x55}; /* device address */
+static const uint8_t TADDR[5] = {0x11, 0x11, 0x11, 0x11, 0x11}; /* device address */
 static uint8_t payload[PAYLOAD_SIZE]; /* buffer for payload */
 static volatile bool isrFlag; /* flag set by ISR */
 
