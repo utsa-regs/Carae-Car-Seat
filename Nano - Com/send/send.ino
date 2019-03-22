@@ -21,7 +21,7 @@ bool childInCar = false;
 void setup()
 {
   Serial.begin(9600);
-  Serial.println(F("RF24/examples/GettingStarted"));
+  Serial.println(F("Transmitter."));
   //Serial.println(F("*** PRESS 'T' to begin transmitting to the other node"));
 
   radio.begin();
@@ -45,7 +45,7 @@ void loop()
   /****************** Ping Out Role ***************************/
   //radio.stopListening();                                    // First, stop listening so we can talk.
   Serial.println(F("Now sending"));
-  if (!radio.write(&childInCar, sizeof(bool)))
+  if (!radio.write(&childInCar, sizeof(childInCar)))
   {
     Serial.println(F("failed"));
   }
@@ -71,10 +71,10 @@ void loop()
   else
   {
     bool received = false; // Grab the response, compare, and send to debugging spew
-    radio.read(&recieved, sizeof(bool));
+    radio.read(&received, sizeof(received));
 
     // Spew it
-    if (recieved)
+    if (received)
     {
       Serial.println(F("Message was recieved."));
     }

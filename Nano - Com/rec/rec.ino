@@ -21,7 +21,7 @@ bool childInCar = false;
 void setup()
 {
   Serial.begin(9600);
-  Serial.println(F("RF24/examples/GettingStarted"));
+  Serial.println(F("Reciever."));
   //Serial.println(F("*** PRESS 'T' to begin transmitting to the other node"));
 
   radio.begin();
@@ -51,11 +51,12 @@ void loop()
     {                                        // While there is data ready
       radio.read(&childInCar, sizeof(bool)); // Get the payload
       recieved = true;
+      Serial.println(F("Received data."));
+      radio.stopListening();                // First, stop listening so we can talk
+      radio.write(&recieved, sizeof(bool)); // Send the final one back.
+      radio.startListening();               // Now, resume listening so we catch the next packets.
+      Serial.println(F("Sent response."));
     }
-
-    radio.stopListening();                // First, stop listening so we can talk
-    radio.write(&recieved, sizeof(bool)); // Send the final one back.
-    radio.startListening();               // Now, resume listening so we catch the next packets.
-    Serial.print(F("Sent response."));
+  //end while loop
   }
 }
