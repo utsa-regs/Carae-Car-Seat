@@ -22,11 +22,10 @@ void setup()
 {
   Serial.begin(9600);
   Serial.println(F("Transmitter."));
-  //Serial.println(F("*** PRESS 'T' to begin transmitting to the other node"));
+  //!Serial.println(F("*** PRESS 'T' to begin transmitting to the other node"));
 
   radio.begin();
 
-  // Set the PA Level low to prevent power supply related issues since this is a
   // getting_started sketch, and the likelihood of close proximity of the devices. RF24_PA_MAX is default.
   radio.setPALevel(RF24_PA_LOW);
 
@@ -36,21 +35,21 @@ void setup()
   radio.openReadingPipe(1, addresses[0]);
 
   // Start the radio listening for data
-  // radio.startListening();
+  //! radio.startListening();
 }
 
 void loop()
 {
 
   /****************** Ping Out Role ***************************/
-  //radio.stopListening();                                    // First, stop listening so we can talk.
-  Serial.println(F("Now sending"));
-  if (!radio.write(&childInCar, sizeof(childInCar)))
+  //!radio.stopListening();                                    // First, stop listening so we can talk.
+  Serial.println(F("Now sending")); //TODO: this will be removed eventually
+  if (!radio.write(&childInCar, sizeof(childInCar))) //TODO: this can eventually be simplified down to just write
   {
-    Serial.println(F("failed"));
+    Serial.println(F("failed")); //TODO: This eventually wont be needed
   }
 
-  radio.startListening(); // Now, listening for response
+  /*radio.startListening(); // Now, listening for response
 
   unsigned long started_waiting_at = micros(); // Set up a timeout period, get the current microseconds
   boolean timeout = false;                     // Set up a variable to indicate if a response was received or not
@@ -83,7 +82,7 @@ void loop()
       Serial.println(F("Message was not recieved."));
     }
   }
-
+  */
   // Try again 1s later
   delay(1000);
 } // Loop

@@ -3,5 +3,5 @@
     "configuration": "cpu=atmega328old",
     "programmer": "AVRISP mkII",
     "port": "COM6",
-    "sketch": "Nano - Send and Recieved\\recieve_data\\recieved_data.ino"
+    "sketch": "Nano - Com/rec/rec.ino"
 }

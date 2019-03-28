@@ -42,21 +42,29 @@ void setup()
 
 void loop()
 {
-  bool recieved = false;
+  childInCar = false; //TODO: once the signal is reliably received this needs to be removed
+  if(!childInCar) Serial.println("Child status is cleared."); //TODO: this will be removed eventually
+  else Serial.println("Error: childInCar wasn't reset to false"); //TODO: this will be removed eventually
 
+  while (!radio.available()){}
+  radio.read(&childInCar, sizeof(bool)); // Get the payload
+  /*
   if (radio.available())
   {
     // Variable for the received timestamp
     while (radio.available())
     {                                        // While there is data ready
       radio.read(&childInCar, sizeof(bool)); // Get the payload
-      recieved = true;
-      Serial.println(F("Received data."));
-      radio.stopListening();                // First, stop listening so we can talk
-      radio.write(&recieved, sizeof(bool)); // Send the final one back.
-      radio.startListening();               // Now, resume listening so we catch the next packets.
-      Serial.println(F("Sent response."));
+      //!received = true;
+      //!Serial.println(F("Received data."));
+      //!radio.stopListening();                // First, stop listening so we can talk
     }
-  //end while loop
+    //end while loop
+    //!radio.write(&received, sizeof(bool)); // Send the final one back.
+    //!radio.startListening();               // Now, resume listening so we catch the next packets.
+    //!Serial.println(F("Sent response."));
   }
+  */
+  if (childInCar) Serial.println(F("Child is in Car Seat.")); //TODO: this will be removed eventually
+  else Serial.println(F("Child NOT in Car Seat.")); //TODO: this will be removed eventually
 }
