@@ -43,7 +43,7 @@ void loop()
 {
 
   /****************** Ping Out Role ***************************/
-  //radio.stopListening();                                    // First, stop listening so we can talk.
+  radio.stopListening();                                    // First, stop listening so we can talk.
   Serial.println(F("Now sending"));
   if (!radio.write(&childInCar, sizeof(childInCar)))
   {
