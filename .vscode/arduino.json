@@ -2,6 +2,6 @@
     "board": "arduino:avr:nano",
     "configuration": "cpu=atmega328old",
     "programmer": "AVRISP mkII",
-    "port": "COM6",
-    "sketch": "Nano - Send and Recieved\\recieve_data\\recieved_data.ino"
+    "port": "COM5",
+    "sketch": "nano-com\\rec\\rec.ino"
 }
