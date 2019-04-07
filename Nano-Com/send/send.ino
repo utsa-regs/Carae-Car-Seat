@@ -2,7 +2,7 @@
   * Group: REGS
   * Programmer: Joshua Edwards 
   * 4/5/2019
-  * This is the code for our tranmitter. It will transmitted to the key fob
+  * This is the code for our transmitter. It will transmitted to the key fob
   * and send the status of the child in the car seat. If the child 
   * is in the seat as of the last update to the key fob and it is unable to 
   * transmit due to loss of connection (the parent walks away) then 
@@ -16,6 +16,7 @@
 
 #define CE_PIN   14
 #define CSN_PIN  10
+#define SIG_PIN  4
 
 /* Hardware configuration: Set up nRF24L01 radio on SPI bus plus pins 7 & 8 */
 RF24 radio(CE_PIN, CSN_PIN);
@@ -26,6 +27,7 @@ bool childInCar = true;
 
 void setup()
 {
+  pinMode(SIG_PIN, INPUT);
   Serial.begin(9600);
   Serial.println(F("Transmitter."));
 
@@ -47,6 +49,7 @@ void setup()
 
 void loop()
 {
+  childInCar = digitalRead(SIG_PIN);
   if (childInCar)
   {
     Serial.println(F("Baby is in the seat."));

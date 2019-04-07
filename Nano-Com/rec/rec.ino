@@ -32,7 +32,7 @@ unsigned long sleeptime = 20000;        //sleep for 20 seconds
 
 void setup()
 {
-  pinMode(BUZZ_PIN, OUTPUT)
+  pinMode(BUZZ_PIN, OUTPUT);
   Serial.begin(9600);             // TODO: Remove this when I don't need to display to serial
   Serial.println(F("Receiver.")); // TODO: Remove this when I don't need to display to serial
 
