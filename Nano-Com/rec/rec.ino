@@ -25,7 +25,8 @@ RF24 radio(CE_PIN, CSN_PIN);
 byte addresses[2][6] = {"Node1", "Node2"};
 bool childInCar = false;
 bool sleep = false;
-unsigned long currentMillis;
+bool test = false;
+unsigned long currMillis;
 unsigned long prevMillis;
 unsigned long txIntervalMillis = 5000;  // check for 5 second gap
 unsigned long sleeptime = 20000;        //sleep for 20 seconds
@@ -56,21 +57,33 @@ void setup()
 void loop()
 {
   prevMillis = millis();                            // Get current time and put it into prevMillis
+  currMillis = millis();
+  if (test) test = false;
+  else test = true;
+  if (test)
+  {
+    digitalWrite(BUZZ_PIN,HIGH);
+    while (currMillis - prevMillis < 2000)
+    {
+      currMillis = millis();
+    }
+    digitalWrite(BUZZ_PIN,LOW);
+  }
   if (sleep)                                        // If the RF24 is asleep
   {
-    currentMillis = millis();                       // Get time and put into currentMillis
-    while(currentMillis - prevMillis < sleeptime)   // While time is less than 20 secs
+    currMillis = millis();                       // Get time and put into currMillis
+    while(currMillis - prevMillis < sleeptime)   // While time is less than 20 secs
     {
-      currentMillis = millis();                     // Get current time
+      currMillis = millis();                     // Get current time
     }                                               // Come out of loop
     sleep = false;                                  // Device coming out of sleep
-    radio.PowerUp();                                // Power up RF24
+    radio.powerUp();                                // Power up RF24
     prevMillis = millis();                          // Put current time into prevMillis
   }
   while (!radio.available())                        // If there is nothing in the buffer we are gonna wait
   {
-    currentMillis = millis();                       // Get current time while in loop
-    if (currentMillis - prevMillis >= txIntervalMillis) // If it has been longer than 5 seconds
+    currMillis = millis();                       // Get current time while in loop
+    if (currMillis - prevMillis >= txIntervalMillis) // If it has been longer than 5 seconds
     {
         if(childInCar)                              // If the child is in the seat
         {
