@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-#Progress monitor hint: 29
+#Progress monitor hint: 31
 first : all
 -include ../makefile.init
 
@@ -44,56 +44,40 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-Freedom_NRF24L01.elf \
+KL25_MultiADC_DMA.elf \
 
 EXECUTABLES_QUOTED += \
-"Freedom_NRF24L01.elf" \
+"KL25_MultiADC_DMA.elf" \
 
 EXECUTABLES_OS_FORMAT += \
-Freedom_NRF24L01.elf \
-
-SECONDARY_SIZE += \
-Freedom_NRF24L01.siz \
-
-SECONDARY_SIZE_QUOTED += \
-"Freedom_NRF24L01.siz" \
-
-SECONDARY_SIZE_OS_FORMAT += \
-Freedom_NRF24L01.siz \
+KL25_MultiADC_DMA.elf \
 
 
 # All Target
-all: warning-messages explicit-dependencies Freedom_NRF24L01.elf secondary-outputs
+all: warning-messages explicit-dependencies KL25_MultiADC_DMA.elf secondary-outputs
 
 # Tool invocations
-Freedom_NRF24L01.elf: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/ProcessorExpert.ld
+KL25_MultiADC_DMA.elf: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/ProcessorExpert.ld
 	@echo 'Building target: $@'
-	@echo 'Executing target #30 $@'
+	@echo 'Executing target #32 $@'
 	@echo 'Invoking: ARM Ltd Windows GCC C Linker'
-	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc"  $(USER_OBJS_QUOTED) $(LIBS_QUOTED) @"Freedom_NRF24L01.args" -o"Freedom_NRF24L01.elf"
+	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc"  $(USER_OBJS_QUOTED) $(LIBS_QUOTED) @"KL25_MultiADC_DMA.args" -o"KL25_MultiADC_DMA.elf"
 	@echo 'Finished building target: $@'
-	@echo ' '
-
-Freedom_NRF24L01.siz: Freedom_NRF24L01.elf
-	@echo 'Executing target #31 $@'
-	@echo 'Invoking: ARM Ltd Windows GNU Print Size'
-	"$(ARMSourceryDirEnv)/arm-none-eabi-size"  --format=berkeley Freedom_NRF24L01.elf
-	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(S_DEPS_QUOTED) "./*/*.o" "./*/*/*.o"  $(S_UPPER_DEPS_QUOTED) $(ASM_DEPS_QUOTED) $(SECONDARY_SIZE_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(SX_DEPS_QUOTED) $(EXECUTABLES_QUOTED) "./*/*.d" "./*/*/*.d"  $(ProjDirPath)/FLASH/Freedom_NRF24L01.elf
+	-$(RM) $(S_DEPS_QUOTED) "./*/*.o" "./*/*/*.o"  $(S_UPPER_DEPS_QUOTED) $(ASM_DEPS_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(SX_DEPS_QUOTED) $(EXECUTABLES_QUOTED) "./*/*.d" "./*/*/*.d"  $(ProjDirPath)/FLASH/KL25_MultiADC_DMA.elf
 	-@echo ' '
 
-secondary-outputs: $(SECONDARY_SIZE)
+secondary-outputs:
 
 .PHONY: all clean dependents explicit-dependencies warning-messages
 .SECONDARY:
 
 -include ../makefile.targets
 
-explicit-dependencies: ../Project_Settings/Linker_Files/ProcessorExpert.ld Freedom_NRF24L01.elf 
+explicit-dependencies: ../Project_Settings/Linker_Files/ProcessorExpert.ld 
 
 warning-messages: 
 

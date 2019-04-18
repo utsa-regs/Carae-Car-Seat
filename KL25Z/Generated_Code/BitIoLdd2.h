@@ -6,7 +6,7 @@
 **     Component   : BitIO_LDD
 **     Version     : Component 01.033, Driver 01.03, CPU db: 3.00.000
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2019-03-02, 11:15, # CodeGen: 0
+**     Date/Time   : 2019-04-10, 17:35, # CodeGen: 63
 **     Abstract    :
 **         The HAL BitIO component provides a low level API for unified
 **         access to general purpose digital input/output pins across
@@ -16,12 +16,12 @@
 **         portable to various microprocessors.
 **     Settings    :
 **          Component name                                 : BitIoLdd2
-**          Pin for I/O                                    : PTB9
-**          Pin signal                                     : RF_CSN
+**          Pin for I/O                                    : PTA13/TPM1_CH1
+**          Pin signal                                     : 
 **          Direction                                      : Output
 **          Initialization                                 : 
 **            Init. direction                              : Output
-**            Init. value                                  : 1
+**            Init. value                                  : 0
 **            Auto initialization                          : yes
 **          Safe mode                                      : yes
 **     Contents    :
@@ -101,7 +101,7 @@ extern "C" {
 
 
 /*! Peripheral base address of a device allocated by the component. This constant can be used directly in PDD macros. */
-#define BitIoLdd2_PRPH_BASE_ADDRESS  0x400FF040U
+#define BitIoLdd2_PRPH_BASE_ADDRESS  0x400FF000U
   
 /*! Device data structure pointer used when auto initialization property is enabled. This constant can be passed as a first parameter to all component's methods. */
 #define BitIoLdd2_DeviceData  ((LDD_TDeviceData *)PE_LDD_GetDeviceStructure(PE_LDD_COMPONENT_BitIoLdd2_ID))
@@ -114,9 +114,9 @@ extern "C" {
 #define BitIoLdd2_SetVal_METHOD_ENABLED /*!< SetVal method of the component BitIoLdd2 is enabled (generated) */
 
 /* Definition of implementation constants */
-#define BitIoLdd2_MODULE_BASE_ADDRESS FPTB_BASE_PTR /*!< Name of macro used as the base address */
-#define BitIoLdd2_PORTCONTROL_BASE_ADDRESS PORTB_BASE_PTR /*!< Name of macro used as the base address */
-#define BitIoLdd2_PORT_MASK 0x0200U    /*!< Mask of the allocated pin from the port */
+#define BitIoLdd2_MODULE_BASE_ADDRESS FPTA_BASE_PTR /*!< Name of macro used as the base address */
+#define BitIoLdd2_PORTCONTROL_BASE_ADDRESS PORTA_BASE_PTR /*!< Name of macro used as the base address */
+#define BitIoLdd2_PORT_MASK 0x2000U    /*!< Mask of the allocated pin from the port */
 
 
 

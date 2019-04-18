@@ -18,8 +18,6 @@
 #define CSN_PIN  10
 #define CHILD_PIN  4            // input from KL25Z (child status)
 #define CSTATUS_PIN 5           // output to KL25z (comms)
-#define PIR1_PIN 16             // PIR1 pin
-#define PIR2_PIN 15             // PIR2 pin
 
 /* Hardware configuration: Set up nRF24L01 radio on SPI bus plus pins 7 & 8 */
 RF24 radio(CE_PIN, CSN_PIN);
@@ -62,8 +60,6 @@ void setup()
 void loop()
 {
   childInCar = digitalRead(CHILD_PIN);
-  movement1 = digitalRead(PIR1_PIN);
-  movement2 = digitalRead(PIR2_PIN);
   /* The following code is to test the PIR sensors */
   if (movement2) Serial.println(F("PIR is true."));
   else Serial.println(F("PIR is false."));

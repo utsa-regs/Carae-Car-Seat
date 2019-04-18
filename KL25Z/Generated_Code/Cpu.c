@@ -7,13 +7,15 @@
 **     Version     : Component 01.025, Driver 01.04, CPU db: 3.00.000
 **     Datasheet   : KL25P80M48SF0RM, Rev.3, Sep 2012
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2019-03-02, 11:15, # CodeGen: 0
+**     Date/Time   : 2019-04-17, 20:22, # CodeGen: 69
 **     Abstract    :
 **
 **     Settings    :
 **
 **     Contents    :
-**         No public methods
+**         SetOperationMode - LDD_TError Cpu_SetOperationMode(LDD_TDriverOperationMode OperationMode,...
+**         EnableInt        - void Cpu_EnableInt(void);
+**         DisableInt       - void Cpu_DisableInt(void);
 **
 **     Copyright : 1997 - 2014 Freescale Semiconductor, Inc. 
 **     All Rights Reserved.
@@ -60,25 +62,29 @@
 /* MODULE Cpu. */
 
 /* {Default RTOS Adapter} No RTOS includes */
-#include "CE.h"
+#include "CsIO1.h"
+#include "IO1.h"
+#include "ADC1.h"
+#include "DMA1.h"
+#include "TU1.h"
+#include "A12.h"
 #include "BitIoLdd1.h"
-#include "CSN.h"
+#include "A13.h"
 #include "BitIoLdd2.h"
-#include "IRQ.h"
-#include "ExtIntLdd1.h"
-#include "SM1.h"
-#include "SMasterLdd1.h"
-#include "LEDR.h"
-#include "LEDpin1.h"
+#include "E5.h"
 #include "BitIoLdd3.h"
-#include "LEDG.h"
-#include "LEDpin2.h"
+#include "B9.h"
 #include "BitIoLdd4.h"
-#include "LEDB.h"
-#include "LEDpin3.h"
+#include "C17.h"
+#include "BitIoLdd6.h"
+#include "C16.h"
 #include "BitIoLdd5.h"
-#include "WAIT1.h"
-#include "MCUC1.h"
+#include "C2.h"
+#include "BitIoLdd7.h"
+#include "E2.h"
+#include "BitIoLdd8.h"
+#include "D2.h"
+#include "BitIoLdd9.h"
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
@@ -111,6 +117,20 @@ PE_ISR(Cpu_INT_NMIInterrupt)
 
 /*
 ** ===================================================================
+**     Method      :  Cpu_INT_Hard_FaultInterrupt (component MKL25Z128LK4)
+**
+**     Description :
+**         This ISR services the 'hard fault' interrupt.
+**         This method is internal. It is used by Processor Expert only.
+** ===================================================================
+*/
+PE_ISR(Cpu_INT_Hard_FaultInterrupt)
+{
+  Cpu_OnHardFault();
+}
+
+/*
+** ===================================================================
 **     Method      :  Cpu_Cpu_Interrupt (component MKL25Z128LK4)
 **
 **     Description :
@@ -122,6 +142,110 @@ PE_ISR(Cpu_Interrupt)
 {
   /* This code can be changed using the CPU component property "Build Options / Unhandled int code" */
   PE_DEBUGHALT();
+}
+
+/*
+** ===================================================================
+**     Method      :  Cpu_SetOperationMode (component MKL25Z128LK4)
+*/
+/*!
+**     @brief
+**         This method requests to change the component's operation
+**         mode (RUN, WAIT, SLEEP, STOP). The target operation mode
+**         will be entered immediately. 
+**         See [Operation mode settings] for further details of the
+**         operation modes mapping to low power modes of the cpu.
+**     @param
+**         OperationMode   - Requested driver
+**                           operation mode
+**     @param
+**         ModeChangeCallback - Callback to
+**                           notify the upper layer once a mode has been
+**                           changed. Parameter is ignored, only for
+**                           compatibility of API with other components.
+**     @param
+**         ModeChangeCallbackParamPtr 
+**                           - Pointer to callback parameter to notify
+**                           the upper layer once a mode has been
+**                           changed. Parameter is ignored, only for
+**                           compatibility of API with other components.
+**     @return
+**                         - Error code
+**                           ERR_OK - OK
+**                           ERR_PARAM_MODE - Invalid operation mode
+*/
+/* ===================================================================*/
+LDD_TError Cpu_SetOperationMode(LDD_TDriverOperationMode OperationMode, LDD_TCallback ModeChangeCallback, LDD_TCallbackParam *ModeChangeCallbackParamPtr)
+{
+  (void) ModeChangeCallback;           /* Parameter is not used, suppress unused argument warning */
+  (void) ModeChangeCallbackParamPtr;   /* Parameter is not used, suppress unused argument warning */
+  switch (OperationMode) {
+    case DOM_RUN:
+      /* SCB_SCR: SLEEPDEEP=0,SLEEPONEXIT=0 */
+      SCB_SCR &= (uint32_t)~(uint32_t)(
+                  SCB_SCR_SLEEPDEEP_MASK |
+                  SCB_SCR_SLEEPONEXIT_MASK
+                 );
+      if ((MCG_S & MCG_S_CLKST_MASK) != MCG_S_CLKST(3)) { /* If in PBE mode, switch to PEE. PEE to PBE transition was caused by wakeup from low power mode. */
+        /* MCG_C1: CLKS=0,IREFS=0 */
+        MCG_C1 &= (uint8_t)~(uint8_t)((MCG_C1_CLKS(0x03) | MCG_C1_IREFS_MASK));
+        while( (MCG_S & MCG_S_LOCK0_MASK) == 0x00U) { /* Wait for PLL lock */
+        }
+      }
+      break;
+    case DOM_WAIT:
+      /* SCB_SCR: SLEEPDEEP=0 */
+      SCB_SCR &= (uint32_t)~(uint32_t)(SCB_SCR_SLEEPDEEP_MASK);
+      /* SCB_SCR: SLEEPONEXIT=0 */
+      SCB_SCR &= (uint32_t)~(uint32_t)(SCB_SCR_SLEEPONEXIT_MASK);
+      PE_WFI();
+      break;
+    case DOM_SLEEP:
+      /* SCB_SCR: SLEEPDEEP=1 */
+      SCB_SCR |= SCB_SCR_SLEEPDEEP_MASK;
+      /* SMC_STOPCTRL: PSTOPO=0,PORPO=0,??=0,??=0,VLLSM=0 */
+      SMC_STOPCTRL = (SMC_STOPCTRL_PSTOPO(0x00) | SMC_STOPCTRL_VLLSM(0x00));
+      /* SMC_PMCTRL: STOPM=0 */
+      SMC_PMCTRL &= (uint8_t)~(uint8_t)(SMC_PMCTRL_STOPM(0x07));
+      (void)(SMC_PMCTRL == 0U);        /* Dummy read of SMC_PMCTRL to ensure the register is written before enterring low power mode */
+      /* SCB_SCR: SLEEPONEXIT=0 */
+      SCB_SCR &= (uint32_t)~(uint32_t)(SCB_SCR_SLEEPONEXIT_MASK);
+      PE_WFI();
+      break;
+    case DOM_STOP:
+      break;
+    default:
+      return ERR_PARAM_MODE;
+  }
+  return ERR_OK;
+}
+
+/*
+** ===================================================================
+**     Method      :  Cpu_EnableInt (component MKL25Z128LK4)
+*/
+/*!
+**     @brief
+**         Enables all maskable interrupts.
+*/
+/* ===================================================================*/
+void Cpu_EnableInt(void)
+{
+ __EI();
+}
+
+/*
+** ===================================================================
+**     Method      :  Cpu_DisableInt (component MKL25Z128LK4)
+*/
+/*!
+**     @brief
+**         Disables all maskable interrupts.
+*/
+/* ===================================================================*/
+void Cpu_DisableInt(void)
+{
+ __DI();
 }
 
 
@@ -144,46 +268,66 @@ void __init_hardware(void)
   /* System clock initialization */
   /* SIM_CLKDIV1: OUTDIV1=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,OUTDIV4=3,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0 */
   SIM_CLKDIV1 = (SIM_CLKDIV1_OUTDIV1(0x00) | SIM_CLKDIV1_OUTDIV4(0x03)); /* Set the system prescalers to safe value */
-  /* SIM_SCGC5: PORTE=1,PORTD=1,PORTB=1,PORTA=1 */
+  /* SIM_SCGC5: PORTE=1,PORTD=1,PORTC=1,PORTB=1,PORTA=1 */
   SIM_SCGC5 |= SIM_SCGC5_PORTE_MASK |
                SIM_SCGC5_PORTD_MASK |
+               SIM_SCGC5_PORTC_MASK |
                SIM_SCGC5_PORTB_MASK |
                SIM_SCGC5_PORTA_MASK;   /* Enable clock gate for ports to enable pin routing */
   if ((PMC_REGSC & PMC_REGSC_ACKISO_MASK) != 0x0U) {
     /* PMC_REGSC: ACKISO=1 */
     PMC_REGSC |= PMC_REGSC_ACKISO_MASK; /* Release IO pads after wakeup from VLLS mode. */
   }
-  /* SIM_CLKDIV1: OUTDIV1=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,OUTDIV4=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0 */
-  SIM_CLKDIV1 = (SIM_CLKDIV1_OUTDIV1(0x00) | SIM_CLKDIV1_OUTDIV4(0x00)); /* Update system prescalers */
-  /* SIM_SOPT2: PLLFLLSEL=0 */
-  SIM_SOPT2 &= (uint32_t)~(uint32_t)(SIM_SOPT2_PLLFLLSEL_MASK); /* Select FLL as a clock source for various peripherals */
-  /* SIM_SOPT1: OSC32KSEL=3 */
-  SIM_SOPT1 |= SIM_SOPT1_OSC32KSEL(0x03); /* LPO 1kHz oscillator drives 32 kHz clock for various peripherals */
+  /* SIM_CLKDIV1: OUTDIV1=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,OUTDIV4=1,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0 */
+  SIM_CLKDIV1 = (SIM_CLKDIV1_OUTDIV1(0x00) | SIM_CLKDIV1_OUTDIV4(0x01)); /* Update system prescalers */
+  /* SIM_SOPT2: PLLFLLSEL=1 */
+  SIM_SOPT2 |= SIM_SOPT2_PLLFLLSEL_MASK; /* Select PLL as a clock source for various peripherals */
+  /* SIM_SOPT1: OSC32KSEL=0 */
+  SIM_SOPT1 &= (uint32_t)~(uint32_t)(SIM_SOPT1_OSC32KSEL(0x03)); /* System oscillator drives 32 kHz clock for various peripherals */
   /* SIM_SOPT2: TPMSRC=1 */
   SIM_SOPT2 = (uint32_t)((SIM_SOPT2 & (uint32_t)~(uint32_t)(
                SIM_SOPT2_TPMSRC(0x02)
               )) | (uint32_t)(
                SIM_SOPT2_TPMSRC(0x01)
               ));                      /* Set the TPM clock */
-  /* Switch to FEI Mode */
-  /* MCG_C1: CLKS=0,FRDIV=0,IREFS=1,IRCLKEN=1,IREFSTEN=0 */
-  MCG_C1 = MCG_C1_CLKS(0x00) |
-           MCG_C1_FRDIV(0x00) |
-           MCG_C1_IREFS_MASK |
-           MCG_C1_IRCLKEN_MASK;
-  /* MCG_C2: LOCRE0=0,??=0,RANGE0=0,HGO0=0,EREFS0=0,LP=0,IRCS=0 */
-  MCG_C2 = MCG_C2_RANGE0(0x00);
-  /* MCG_C4: DMX32=0,DRST_DRS=0 */
-  MCG_C4 &= (uint8_t)~(uint8_t)((MCG_C4_DMX32_MASK | MCG_C4_DRST_DRS(0x03)));
+  /* PORTA_PCR18: ISF=0,MUX=0 */
+  PORTA_PCR18 &= (uint32_t)~(uint32_t)((PORT_PCR_ISF_MASK | PORT_PCR_MUX(0x07)));
+  /* PORTA_PCR19: ISF=0,MUX=0 */
+  PORTA_PCR19 &= (uint32_t)~(uint32_t)((PORT_PCR_ISF_MASK | PORT_PCR_MUX(0x07)));
+  /* MCG_SC: FCRDIV=1 */
+  MCG_SC = (uint8_t)((MCG_SC & (uint8_t)~(uint8_t)(
+            MCG_SC_FCRDIV(0x06)
+           )) | (uint8_t)(
+            MCG_SC_FCRDIV(0x01)
+           ));
+  /* Switch to FBE Mode */
+  /* MCG_C2: LOCRE0=0,??=0,RANGE0=2,HGO0=0,EREFS0=1,LP=0,IRCS=1 */
+  MCG_C2 = (MCG_C2_RANGE0(0x02) | MCG_C2_EREFS0_MASK | MCG_C2_IRCS_MASK);
   /* OSC0_CR: ERCLKEN=1,??=0,EREFSTEN=0,??=0,SC2P=0,SC4P=0,SC8P=0,SC16P=0 */
   OSC0_CR = OSC_CR_ERCLKEN_MASK;
-  /* MCG_C5: ??=0,PLLCLKEN0=0,PLLSTEN0=0,PRDIV0=0 */
-  MCG_C5 = MCG_C5_PRDIV0(0x00);
+  /* MCG_C1: CLKS=2,FRDIV=3,IREFS=0,IRCLKEN=1,IREFSTEN=0 */
+  MCG_C1 = (MCG_C1_CLKS(0x02) | MCG_C1_FRDIV(0x03) | MCG_C1_IRCLKEN_MASK);
+  /* MCG_C4: DMX32=0,DRST_DRS=0 */
+  MCG_C4 &= (uint8_t)~(uint8_t)((MCG_C4_DMX32_MASK | MCG_C4_DRST_DRS(0x03)));
+  /* MCG_C5: ??=0,PLLCLKEN0=0,PLLSTEN0=0,PRDIV0=3 */
+  MCG_C5 = MCG_C5_PRDIV0(0x03);
   /* MCG_C6: LOLIE0=0,PLLS=0,CME0=0,VDIV0=0 */
   MCG_C6 = MCG_C6_VDIV0(0x00);
-  while((MCG_S & MCG_S_IREFST_MASK) == 0x00U) { /* Check that the source of the FLL reference clock is the internal reference clock. */
+  while((MCG_S & MCG_S_IREFST_MASK) != 0x00U) { /* Check that the source of the FLL reference clock is the external reference clock. */
   }
-  while((MCG_S & 0x0CU) != 0x00U) {    /* Wait until output of the FLL is selected */
+  while((MCG_S & 0x0CU) != 0x08U) {    /* Wait until external reference clock is selected as MCG output */
+  }
+  /* Switch to PBE Mode */
+  /* MCG_C6: LOLIE0=0,PLLS=1,CME0=0,VDIV0=0 */
+  MCG_C6 = (MCG_C6_PLLS_MASK | MCG_C6_VDIV0(0x00));
+  while((MCG_S & 0x0CU) != 0x08U) {    /* Wait until external reference clock is selected as MCG output */
+  }
+  while((MCG_S & MCG_S_LOCK0_MASK) == 0x00U) { /* Wait until locked */
+  }
+  /* Switch to PEE Mode */
+  /* MCG_C1: CLKS=0,FRDIV=3,IREFS=0,IRCLKEN=1,IREFSTEN=0 */
+  MCG_C1 = (MCG_C1_CLKS(0x00) | MCG_C1_FRDIV(0x03) | MCG_C1_IRCLKEN_MASK);
+  while((MCG_S & 0x0CU) != 0x0CU) {    /* Wait until output of the PLL is selected */
   }
   /*** End of PE initialization code after reset ***/
 
@@ -224,7 +368,6 @@ void PE_low_level_init(void)
                RCM_RPFC_RSTFLTSS_MASK |
                RCM_RPFC_RSTFLTSRW(0x03)
               );
-        /* Initialization of the FTFL_FlashConfig module */
       /* Initialization of the PMC module */
   /* PMC_LVDSC1: LVDACK=1,LVDIE=0,LVDRE=1,LVDV=0 */
   PMC_LVDSC1 = (uint8_t)((PMC_LVDSC1 & (uint8_t)~(uint8_t)(
@@ -250,8 +393,22 @@ void PE_low_level_init(void)
   /* SMC_PMPROT: ??=0,??=0,AVLP=0,??=0,ALLS=0,??=0,AVLLS=0,??=0 */
   SMC_PMPROT = 0x00U;                  /* Setup Power mode protection register */
   /* Common initialization of the CPU registers */
-  /* GPIOD_PDDR: PDD&=~0x10 */
-  GPIOD_PDDR &= (uint32_t)~(uint32_t)(GPIO_PDDR_PDD(0x10));
+  /* PORTB_PCR0: ISF=0,MUX=0 */
+  PORTB_PCR0 &= (uint32_t)~(uint32_t)((PORT_PCR_ISF_MASK | PORT_PCR_MUX(0x07)));
+  /* PORTB_PCR1: ISF=0,MUX=0 */
+  PORTB_PCR1 &= (uint32_t)~(uint32_t)((PORT_PCR_ISF_MASK | PORT_PCR_MUX(0x07)));
+  /* PORTB_PCR2: ISF=0,MUX=0 */
+  PORTB_PCR2 &= (uint32_t)~(uint32_t)((PORT_PCR_ISF_MASK | PORT_PCR_MUX(0x07)));
+  /* NVIC_IPR3: PRI_15=0 */
+  NVIC_IPR3 &= (uint32_t)~(uint32_t)(NVIC_IP_PRI_15(0xFF));
+  /* NVIC_ISER: SETENA|=1 */
+  NVIC_ISER |= NVIC_ISER_SETENA(0x01);
+  /* NVIC_IPR0: PRI_2=0,PRI_1=0,PRI_0=0 */
+  NVIC_IPR0 &= (uint32_t)~(uint32_t)(
+                NVIC_IP_PRI_2(0xFF) |
+                NVIC_IP_PRI_1(0xFF) |
+                NVIC_IP_PRI_0(0xFF)
+               );
   /* PORTA_PCR20: ISF=0,MUX=7 */
   PORTA_PCR20 = (uint32_t)((PORTA_PCR20 & (uint32_t)~(uint32_t)(
                  PORT_PCR_ISF_MASK
@@ -260,60 +417,42 @@ void PE_low_level_init(void)
                 ));
   /* NVIC_IPR1: PRI_6=0 */
   NVIC_IPR1 &= (uint32_t)~(uint32_t)(NVIC_IP_PRI_6(0xFF));
+  /* ### Serial_LDD "IO1" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
+  (void)IO1_Init(NULL);
+  /* ### Init_ADC "ADC1" init code ... */
+  /* ### Call "ADC1_Init();" init method in a user code, i.e. in the main code */
+
+  /* ### Note:   To enable automatic calling of the "ADC1" init code here,
+                 the 'Call Init method' property must be set to 'yes'.
+   */
+  /* ### Init_DMA "DMA1" init code ... */
+  /* ### Call "DMA1_Init();" init method in a user code, i.e. in the main code */
+
+  /* ### Note:   To enable automatic calling of the "DMA1" init code here,
+                 the 'Call Init method' property must be set to 'yes'.
+   */
+  /* ### TimerUnit_LDD "TU1" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
+  (void)TU1_Init(NULL);
   /* ### BitIO_LDD "BitIoLdd1" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
   (void)BitIoLdd1_Init(NULL);
   /* ### BitIO_LDD "BitIoLdd2" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
   (void)BitIoLdd2_Init(NULL);
-  /* ### ExtInt_LDD "ExtIntLdd1" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
-  (void)ExtIntLdd1_Init(NULL);
-  /* ### SynchroMaster "SM1" init code ... */
-  SM1_Init();
-  MCUC1_Init(); /* ### McuLibConfig "MCUC1" init code ... */
   /* ### BitIO_LDD "BitIoLdd3" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
   (void)BitIoLdd3_Init(NULL);
-  LEDR_Init(); /* ### LED "LEDR" init code ... */
   /* ### BitIO_LDD "BitIoLdd4" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
   (void)BitIoLdd4_Init(NULL);
-  LEDG_Init(); /* ### LED "LEDG" init code ... */
+  /* ### BitIO_LDD "BitIoLdd6" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
+  (void)BitIoLdd6_Init(NULL);
   /* ### BitIO_LDD "BitIoLdd5" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
   (void)BitIoLdd5_Init(NULL);
-  LEDB_Init(); /* ### LED "LEDB" init code ... */
-  WAIT1_Init(); /* ### Wait "WAIT1" init code ... */
+  /* ### BitIO_LDD "BitIoLdd7" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
+  (void)BitIoLdd7_Init(NULL);
+  /* ### BitIO_LDD "BitIoLdd8" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
+  (void)BitIoLdd8_Init(NULL);
+  /* ### BitIO_LDD "BitIoLdd9" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
+  (void)BitIoLdd9_Init(NULL);
   __EI();
 }
-  /* Flash configuration field */
-  __attribute__ ((section (".cfmconfig"))) const uint8_t _cfm[0x10] = {
-   /* NV_BACKKEY3: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY2: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY1: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY0: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY7: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY6: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY5: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY4: KEY=0xFF */
-    0xFFU,
-   /* NV_FPROT3: PROT=0xFF */
-    0xFFU,
-   /* NV_FPROT2: PROT=0xFF */
-    0xFFU,
-   /* NV_FPROT1: PROT=0xFF */
-    0xFFU,
-   /* NV_FPROT0: PROT=0xFF */
-    0xFFU,
-   /* NV_FSEC: KEYEN=1,MEEN=3,FSLACC=3,SEC=2 */
-    0x7EU,
-   /* NV_FOPT: ??=1,??=1,FAST_INIT=1,LPBOOT1=1,RESET_PIN_CFG=1,NMI_DIS=1,??=1,LPBOOT0=1 */
-    0xFFU,
-    0xFFU,
-    0xFFU
-  };
 
 /* END Cpu. */
 

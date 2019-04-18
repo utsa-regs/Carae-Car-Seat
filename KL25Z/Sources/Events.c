@@ -1,11 +1,11 @@
-/* ###################################################################
+/** ###################################################################
 **     Filename    : Events.c
 **     Project     : ProcessorExpert
 **     Processor   : MKL25Z128VLK4
 **     Component   : Events
 **     Version     : Driver 01.00
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2013-07-13, 15:26, # CodeGen: 0
+**     Date/Time   : 2013-01-03, 14:56, # CodeGen: 0
 **     Abstract    :
 **         This is user's event module.
 **         Put your event handler code here.
@@ -14,29 +14,14 @@
 **         Cpu_OnNMIINT - void Cpu_OnNMIINT(void);
 **
 ** ###################################################################*/
-/*!
-** @file Events.c
-** @version 01.00
-** @brief
-**         This is user's event module.
-**         Put your event handler code here.
-*/         
-/*!
-**  @addtogroup Events_module Events module documentation
-**  @{
-*/         
 /* MODULE Events */
 
 #include "Cpu.h"
 #include "Events.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif 
-
-
 /* User includes (#include below this line is not maintained by Processor Expert) */
-#include "Application.h"
+#include "my.h"
+
 
 /*
 ** ===================================================================
@@ -46,7 +31,7 @@ extern "C" {
 **     Description :
 **         This event is called when the Non maskable interrupt had
 **         occurred. This event is automatically enabled when the <NMI
-**         interrupt> property is set to 'Enabled'.
+**         interrrupt> property is set to 'Enabled'.
 **     Parameters  : None
 **     Returns     : Nothing
 ** ===================================================================
@@ -58,75 +43,47 @@ void Cpu_OnNMIINT(void)
 
 /*
 ** ===================================================================
-**     Event       :  IRQ_OnInterrupt (module Events)
+**     Event       :  Cpu_OnHardFault (module Events)
 **
-**     Component   :  IRQ [ExtInt]
+**     Component   :  Cpu [MKL25Z128LK4]
 **     Description :
-**         This event is called when an active signal edge/level has
-**         occurred.
+**         This event is called when the Hard Fault exception had
+**         occurred. This event is automatically enabled when the <Hard
+**         Fault> property is set to 'Enabled'.
 **     Parameters  : None
 **     Returns     : Nothing
 ** ===================================================================
 */
-void IRQ_OnInterrupt(void)
-{
-  APP_OnInterrupt();
-}
-
-/*
-** ===================================================================
-**     Event       :  SM1_OnFullRxBuf (module Events)
-**
-**     Component   :  SM1 [SynchroMaster]
-**     Description :
-**         This event is called when the input buffer is full, i.e.
-**         after reception of the last character that was successfully
-**         placed into input buffer.
-**         This event is available only when the <Interrupt
-**         service/event> property is enabled and the <Input buffer
-**         size> property is set to non-zero value.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void SM1_OnFullRxBuf(void)
+void Cpu_OnHardFault(void)
 {
   /* Write your code here ... */
 }
 
 /*
 ** ===================================================================
-**     Event       :  SM1_OnFreeTxBuf (module Events)
+**     Interrupt handler : ADCint
 **
-**     Component   :  SM1 [SynchroMaster]
 **     Description :
-**         This event is called after the last character in output
-**         buffer is transmitted.
-**         This event is available only when the <Interrupt
-**         service/event> property is enabled and the <Output buffer
-**         size> property is set to non-zero value.
+**         User interrupt service routine. 
 **     Parameters  : None
 **     Returns     : Nothing
 ** ===================================================================
 */
-void SM1_OnFreeTxBuf(void)
+PE_ISR(ADCint)
 {
-  /* Write your code here ... */
+  /* Write your interrupt code here ... */	
+	// clear interrupt and flags
+	DMA_DSR0 |= DMA_DSR_BCR_DONE_MASK;
+	Measured = TRUE;
 }
+
 
 /* END Events */
 
-#ifdef __cplusplus
-}  /* extern "C" */
-#endif 
-
-/*!
-** @}
-*/
 /*
 ** ###################################################################
 **
-**     This file was created by Processor Expert 10.2 [05.06]
+**     This file was created by Processor Expert 10.0 [05.03]
 **     for the Freescale Kinetis series of microcontrollers.
 **
 ** ###################################################################

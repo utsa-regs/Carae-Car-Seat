@@ -18,25 +18,25 @@ by the component.
 <table>
 <tr><td colspan="4" class="ttitle1">BitIoLdd2 Initialization</td></tr>
 <tr><td class="ttitle2">Address</td><td class="ttitle2">Register</td><td class="ttitle2">Register Value</td><td class="ttitle2">Register Description</td></tr>
-<tr><td>0x400FF054</td><td>GPIOB_PDDR</td><td>
-    0x00000300
- </td><td>GPIOB_PDDR register, peripheral BitIoLdd2.</td></tr>
-<tr><td>0x400FF040</td><td>GPIOB_PDOR</td><td>
-    0x00000200
- </td><td>GPIOB_PDOR register, peripheral BitIoLdd2.</td></tr>
-<tr><td>0x4004A020</td><td>PORTB_PCR8</td><td>
+<tr><td>0x400FF014</td><td>GPIOA_PDDR</td><td>
+    0x00003000
+ </td><td>GPIOA_PDDR register, peripheral BitIoLdd2.</td></tr>
+<tr><td>0x400FF000</td><td>GPIOA_PDOR</td><td>
+    0x00000000
+ </td><td>GPIOA_PDOR register, peripheral BitIoLdd2.</td></tr>
+<tr><td>0x40049030</td><td>PORTA_PCR12</td><td>
     0x00000100
- </td><td>PORTB_PCR8 register, peripheral BitIoLdd2.</td></tr>
-<tr><td>0x4004A024</td><td>PORTB_PCR9</td><td>
+ </td><td>PORTA_PCR12 register, peripheral BitIoLdd2.</td></tr>
+<tr><td>0x40049034</td><td>PORTA_PCR13</td><td>
     0x00000100
- </td><td>PORTB_PCR9 register, peripheral BitIoLdd2.</td></tr>
+ </td><td>PORTA_PCR13 register, peripheral BitIoLdd2.</td></tr>
 </table>
 <br/>
 \page BitIoLdd2_regs_details Register Initialization Details
 This page contains detailed description of initialization values for the 
 registers of the peripheral(s) configured by the component. 
 
-<div class="reghdr1">GPIOB_PDDR</div>
+<div class="reghdr1">GPIOA_PDDR</div>
 <div class="regdiag">
 <table class="regtbl">
 <tr class="trd1r">
@@ -72,13 +72,13 @@ registers of the peripheral(s) configured by the component.
 </table>
         
 </div>
-<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x400FF054</td></tr>
-<tr class="trowtit"><td  class="trowtit" colspan="2">Initial value</td><td colspan="2">0x00000300</td></tr>
+<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x400FF014</td></tr>
+<tr class="trowtit"><td  class="trowtit" colspan="2">Initial value</td><td colspan="2">0x00003000</td></tr>
 <tr class="trowtit"><td  class="trowtit" colspan="2">After-reset value</td><td colspan="2">0x00000000</td></tr>
 <tr><td class="ttitle2">Bit</td><td class="ttitle2">Field</td><td class="ttitle2">Value</td><td class="ttitle2">Description</td></tr>
 <tr><td>0 - 31</td><td>PDD</td><td>0x00</td><td>Port Data Direction</td>
 </tr></table>
-<div class="reghdr1">GPIOB_PDOR</div>
+<div class="reghdr1">GPIOA_PDOR</div>
 <div class="regdiag">
 <table class="regtbl">
 <tr class="trd1r">
@@ -114,13 +114,13 @@ registers of the peripheral(s) configured by the component.
 </table>
         
 </div>
-<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x400FF040</td></tr>
-<tr class="trowtit"><td  class="trowtit" colspan="2">Initial value</td><td colspan="2">0x00000200</td></tr>
+<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x400FF000</td></tr>
+<tr class="trowtit"><td  class="trowtit" colspan="2">Initial value</td><td colspan="2">0x00000000</td></tr>
 <tr class="trowtit"><td  class="trowtit" colspan="2">After-reset value</td><td colspan="2">0x00000000</td></tr>
 <tr><td class="ttitle2">Bit</td><td class="ttitle2">Field</td><td class="ttitle2">Value</td><td class="ttitle2">Description</td></tr>
 <tr><td>0 - 31</td><td>PDO</td><td>0x00</td><td>Port Data Output</td>
 </tr></table>
-<div class="reghdr1">PORTB_PCR8</div>
+<div class="reghdr1">PORTA_PCR12</div>
 <div class="regdiag">
 <table class="regtbl">
 <tr class="trd1r">
@@ -164,7 +164,7 @@ registers of the peripheral(s) configured by the component.
 </table>
         
 </div>
-<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x4004A020</td></tr>
+<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x40049030</td></tr>
 <tr class="trowtit"><td  class="trowtit" colspan="2">Initial value</td><td colspan="2">0x00000100</td></tr>
 <tr class="trowtit"><td  class="trowtit" colspan="2">After-reset value</td><td colspan="2">0x00000000</td></tr>
 <tr><td class="ttitle2">Bit</td><td class="ttitle2">Field</td><td class="ttitle2">Value</td><td class="ttitle2">Description</td></tr>
@@ -177,7 +177,7 @@ registers of the peripheral(s) configured by the component.
 <tr><td>1</td><td>PE</td><td>0x00</td><td>Pull Enable</td>
 <tr><td>0</td><td>PS</td><td>0x00</td><td>Pull Select</td>
 </tr></table>
-<div class="reghdr1">PORTB_PCR9</div>
+<div class="reghdr1">PORTA_PCR13</div>
 <div class="regdiag">
 <table class="regtbl">
 <tr class="trd1r">
@@ -221,7 +221,7 @@ registers of the peripheral(s) configured by the component.
 </table>
         
 </div>
-<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x4004A024</td></tr>
+<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x40049034</td></tr>
 <tr class="trowtit"><td  class="trowtit" colspan="2">Initial value</td><td colspan="2">0x00000100</td></tr>
 <tr class="trowtit"><td  class="trowtit" colspan="2">After-reset value</td><td colspan="2">0x00000000</td></tr>
 <tr><td class="ttitle2">Bit</td><td class="ttitle2">Field</td><td class="ttitle2">Value</td><td class="ttitle2">Description</td></tr>
@@ -239,12 +239,12 @@ registers of the peripheral(s) configured by the component.
 \page BitIoLdd2_settings Component Settings
 \code
 **          Component name                                 : BitIoLdd2
-**          Pin for I/O                                    : PTB9
-**          Pin signal                                     : RF_CSN
+**          Pin for I/O                                    : PTA13/TPM1_CH1
+**          Pin signal                                     : 
 **          Direction                                      : Output
 **          Initialization                                 : 
 **            Init. direction                              : Output
-**            Init. value                                  : 1
+**            Init. value                                  : 0
 **            Auto initialization                          : yes
 **          Safe mode                                      : yes
 \endcode
