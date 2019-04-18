@@ -58,17 +58,6 @@ void loop()
 {
   prevMillis = millis();                            // Get current time and put it into prevMillis
   currMillis = millis();
-  if (test) test = false;
-  else test = true;
-  if (test)
-  {
-    digitalWrite(BUZZ_PIN,HIGH);
-    while (currMillis - prevMillis < 2000)
-    {
-      currMillis = millis();
-    }
-    digitalWrite(BUZZ_PIN,LOW);
-  }
   if (sleep)                                        // If the RF24 is asleep
   {
     currMillis = millis();                       // Get time and put into currMillis

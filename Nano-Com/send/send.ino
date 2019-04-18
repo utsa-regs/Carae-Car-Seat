@@ -16,7 +16,10 @@
 
 #define CE_PIN   14
 #define CSN_PIN  10
-#define SIG_PIN  4
+#define CHILD_PIN  4            // input from KL25Z (child status)
+#define CSTATUS_PIN 5           // output to KL25z (comms)
+#define PIR1_PIN 16             // PIR1 pin
+#define PIR2_PIN 15             // PIR2 pin
 
 /* Hardware configuration: Set up nRF24L01 radio on SPI bus plus pins 7 & 8 */
 RF24 radio(CE_PIN, CSN_PIN);
@@ -24,10 +27,19 @@ RF24 radio(CE_PIN, CSN_PIN);
 
 byte addresses[2][6] = { "Node1", "Node2" };
 bool childInCar = true;
+bool comm;
+bool x = false;
+bool movement1 = false, movement2 = false;
+unsigned long currMillis;
+unsigned long prevMillis;
+unsigned long txIntervalMillis = 5000;  // check for 5 second gap
 
 void setup()
 {
-  pinMode(SIG_PIN, INPUT);
+  pinMode(CSTATUS_PIN, OUTPUT);
+  pinMode(CHILD_PIN, INPUT);
+  pinMode(PIR1_PIN, INPUT);
+  pinMode(PIR2_PIN, INPUT);
   Serial.begin(9600);
   Serial.println(F("Transmitter."));
 
@@ -49,7 +61,12 @@ void setup()
 
 void loop()
 {
-  childInCar = digitalRead(SIG_PIN);
+  childInCar = digitalRead(CHILD_PIN);
+  movement1 = digitalRead(PIR1_PIN);
+  movement2 = digitalRead(PIR2_PIN);
+  /* The following code is to test the PIR sensors */
+  if (movement2) Serial.println(F("PIR is true."));
+  else Serial.println(F("PIR is false."));
   if (childInCar)
   {
     Serial.println(F("Baby is in the seat."));
@@ -61,8 +78,28 @@ void loop()
   Serial.println(F("Now sending"));
   if (!radio.write(&childInCar, sizeof(bool)))
   {
-    Serial.println(F("failed"));
+    Serial.println(F("Failed"));
+    comm = false;                                     // can't communicate
+    if (!x)                                           // if first time can't communicate
+    {
+      prevMillis = millis();                          // get time
+      x = true;                                       // no longer first time
+    }
   }
+  else
+  {
+    comm = true;                                      // if able to communicate
+    x = false;                                        // set x to false so prevMillis will be gotten next time due to first failure
+    digitalWrite(CSTATUS_PIN, HIGH);                  // set CSTATUS_PIN high
+  }
+  if(!comm)
+  {
+    currMillis = millis();
+    if (currMillis - prevMillis >= txIntervalMillis)  // if not able to send after 5 seconds then 
+    {
+      digitalWrite(CSTATUS_PIN, LOW);                 // set CSTATUS_PIN low
+    }
+  } 
   // Try again 1s later
   delay(1000);
 } // Loop

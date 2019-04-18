@@ -54,6 +54,7 @@
 #define PIN_DC 9                    // d/c pin for the display
 
 // constants for the cute little keypad
+#define SIG_PIN 7
 #define KEYPAD_TOP 15
 #define KEYPAD_LEFT 50
 #define BUTTON_W 60
@@ -82,7 +83,6 @@ ILI9341_t3 Display = ILI9341_t3(PIN_CS, PIN_DC);
 
 bool tooHot = false;
 bool OK[64];
-
 unsigned long CurTime;
 
 // create some text for the keypad butons
@@ -132,7 +132,8 @@ URTouch  Touch( 2, 3, 4, 5, 6);
 
 void setup() {
 
-  // Serial.begin(115200);
+  Serial.begin(9600);
+  pinMode(SIG_PIN ,OUTPUT);
 
   // start the display and set the background to black
   Display.begin();
@@ -386,25 +387,39 @@ Serial.print("[");
     }
     Serial.println("]");
     Serial.println();
-  for (int i=0; i<AMG88xx_PIXEL_ARRAY_SIZE; i++)
-    {
-      if(pixels[i] >=31) 
-      {
-        OK[i] = false;
-      }
-      else OK[i] = true;
-    }
-    tooHot = checkAll(OK,AMG88xx_PIXEL_ARRAY_SIZE);
-    Serial.println(tooHot);
+  
+
+for(int i=0;i<AMG88xx_PIXEL_ARRAY_SIZE; i++)
+{
+  if (pixels[i]>=31)
+  {
+    OK[i]=false;
+  }
+  else OK[i]=true;
+}
+
+tooHot=checkAll(OK,AMG88xx_PIXEL_ARRAY_SIZE);
+if (tooHot)
+{
+  digitalWrite(SIG_PIN,HIGH);
+  delay (1000);
+}
+else
+{
+  digitalWrite(SIG_PIN,LOW);
+  
+}
+Serial.println(tooHot);
 }
 
 bool checkAll(bool* y, int x)
 {
-    for(int i=0; i<x; i++)
-    {
-        if(y[i]==false) return true;
-    }
-    return false;
+  for(int i=0;i<x;i++)
+  {
+    if (y[i]==false) return true;
+    
+  }
+  return false;
 }
 
 // interplation function to create 70 columns for 8 rows

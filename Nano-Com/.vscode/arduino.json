@@ -3,5 +3,5 @@
     "configuration": "cpu=atmega328old",
     "programmer": "AVRISP mkII",
     "port": "COM6",
-    "sketch": "rec\\rec.ino"
+    "sketch": "send/send.ino"
 }
