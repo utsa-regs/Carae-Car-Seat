@@ -13,15 +13,27 @@
 #include <RF24.h>
 #include <nRF24L01.h>
 #include <RF24_config.h>
+#include <SoftwareSerial.h>
+#include <SIM808.h>
 
 #define CE_PIN   14
 #define CSN_PIN  10
 #define CHILD_PIN  4            // input from KL25Z (child status)
 #define CSTATUS_PIN 5           // output to KL25z (comms)
+#define SIM_RST		15	            // SIM808 RESET
+#define SIM_RX		0	            // SIM808 RXD
+#define SIM_TX		1	            // SIM808 TXD
+#define SIM_PWR		6	            // SIM808 PWRKEY
+#define SIM_STATUS	7	          // SIM808 STATUS
 
-/* Hardware configuration: Set up nRF24L01 radio on SPI bus plus pins 7 & 8 */
+#define SIM808_BAUDRATE 4800
+
+/* Hardware configuration: Set up nRF24L01 radio on SPI bus plus pins 14 & 10 */
 RF24 radio(CE_PIN, CSN_PIN);
 /**********************************************************/
+
+SoftwareSerial simSerial = SoftwareSerial(SIM_TX, SIM_RX)
+SIM808 sim808 = SIM808(SIM_RST, SIM_PWR, SIM_STATUS);
 
 byte addresses[2][6] = { "Node1", "Node2" };
 bool childInCar = true;
@@ -55,6 +67,12 @@ void setup()
 
   radio.openWritingPipe(addresses[0]);
   radio.openReadingPipe(1, addresses[1]);
+
+  simSerial.begin(SIM808_BAUDRATE);
+  sim808.begin(simSerial);
+
+  sim808.powerOnOff(true);    //power on the SIM808. Unavailable without the PWRKEY pin wired
+  sim808.init();
 }
 
 void loop()

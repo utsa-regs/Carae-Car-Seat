@@ -18,7 +18,7 @@
   18              		.section	.bss.PE_LDD_DeviceDataList,"aw",%nobits
   19              		.align	2
   22              	PE_LDD_DeviceDataList:
-  23 0000 00000000 		.space	44
+  23 0000 00000000 		.space	40
   23      00000000 
   23      00000000 
   23      00000000 
@@ -52,7 +52,7 @@
    5:../Generated_Code/PE_LDD.c **** **     Processor   : MKL25Z128VLK4
    6:../Generated_Code/PE_LDD.c **** **     Version     : Component 01.025, Driver 01.04, CPU db: 3.00.000
    7:../Generated_Code/PE_LDD.c **** **     Compiler    : GNU C Compiler
-   8:../Generated_Code/PE_LDD.c **** **     Date/Time   : 2019-04-17, 20:22, # CodeGen: 69
+   8:../Generated_Code/PE_LDD.c **** **     Date/Time   : 2019-04-18, 08:58, # CodeGen: 70
    9:../Generated_Code/PE_LDD.c **** **     Abstract    :
   10:../Generated_Code/PE_LDD.c **** **
   11:../Generated_Code/PE_LDD.c **** **     Settings    :
@@ -115,7 +115,7 @@
   68:../Generated_Code/PE_LDD.c **** ** Array of initialized device structures of LDD components.
   69:../Generated_Code/PE_LDD.c **** ** ===========================================================================
   70:../Generated_Code/PE_LDD.c **** */
-  71:../Generated_Code/PE_LDD.c **** LDD_TDeviceData *PE_LDD_DeviceDataList[11] = {
+  71:../Generated_Code/PE_LDD.c **** LDD_TDeviceData *PE_LDD_DeviceDataList[10] = {
   72:../Generated_Code/PE_LDD.c ****     NULL,
   73:../Generated_Code/PE_LDD.c ****     NULL,
   74:../Generated_Code/PE_LDD.c ****     NULL,
@@ -125,50 +125,49 @@
   78:../Generated_Code/PE_LDD.c ****     NULL,
   79:../Generated_Code/PE_LDD.c ****     NULL,
   80:../Generated_Code/PE_LDD.c ****     NULL,
-  81:../Generated_Code/PE_LDD.c ****     NULL,
-  82:../Generated_Code/PE_LDD.c ****     NULL
-  83:../Generated_Code/PE_LDD.c ****   };
-  84:../Generated_Code/PE_LDD.c **** 
-  85:../Generated_Code/PE_LDD.c **** /*
-  86:../Generated_Code/PE_LDD.c **** ** ===========================================================================
-  87:../Generated_Code/PE_LDD.c **** ** The array of clock frequencies in configured clock configurations.
-  88:../Generated_Code/PE_LDD.c **** ** ===========================================================================
-  89:../Generated_Code/PE_LDD.c **** */
-  90:../Generated_Code/PE_LDD.c **** /*! The array of clock configurations (frequencies) configured in configured clock configurations o
-  91:../Generated_Code/PE_LDD.c **** const TCpuClockConfiguration PE_CpuClockConfigurations[CPU_CLOCK_CONFIG_NUMBER] = {
-  92:../Generated_Code/PE_LDD.c ****   /* Clock configuration 0 */
-  93:../Generated_Code/PE_LDD.c ****   {
-  94:../Generated_Code/PE_LDD.c ****     CPU_CORE_CLK_HZ_CONFIG_0,          /*!< Core clock frequency in clock configuration 0 */
-  95:../Generated_Code/PE_LDD.c ****     CPU_BUS_CLK_HZ_CONFIG_0,           /*!< Bus clock frequency in clock configuration 0 */
-  96:../Generated_Code/PE_LDD.c ****     CPU_FLEXBUS_CLK_HZ_CONFIG_0,       /*!< Flexbus clock frequency in clock configuration 0 */
-  97:../Generated_Code/PE_LDD.c ****     CPU_FLASH_CLK_HZ_CONFIG_0,         /*!< FLASH clock frequency in clock configuration 0 */
-  98:../Generated_Code/PE_LDD.c ****     CPU_USB_CLK_HZ_CONFIG_0,           /*!< USB clock frequency in clock configuration 0 */
-  99:../Generated_Code/PE_LDD.c ****     CPU_PLL_FLL_CLK_HZ_CONFIG_0,       /*!< PLL/FLL clock frequency in clock configuration 0 */
- 100:../Generated_Code/PE_LDD.c ****     CPU_MCGIR_CLK_HZ_CONFIG_0,         /*!< MCG internal reference clock frequency in clock configu
- 101:../Generated_Code/PE_LDD.c ****     CPU_OSCER_CLK_HZ_CONFIG_0,         /*!< System OSC external reference clock frequency in clock 
- 102:../Generated_Code/PE_LDD.c ****     CPU_ERCLK32K_CLK_HZ_CONFIG_0,      /*!< External reference clock 32k frequency in clock configu
- 103:../Generated_Code/PE_LDD.c ****     CPU_MCGFF_CLK_HZ_CONFIG_0          /*!< MCG fixed frequency clock */
- 104:../Generated_Code/PE_LDD.c ****   }
- 105:../Generated_Code/PE_LDD.c **** };
- 106:../Generated_Code/PE_LDD.c **** 
- 107:../Generated_Code/PE_LDD.c **** /*
- 108:../Generated_Code/PE_LDD.c **** ** ===================================================================
- 109:../Generated_Code/PE_LDD.c **** **     Method      :  Cpu_PE_FillMemory (component MKL25Z128LK4)
- 110:../Generated_Code/PE_LDD.c **** */
- 111:../Generated_Code/PE_LDD.c **** /*!
- 112:../Generated_Code/PE_LDD.c **** **     @brief
- 113:../Generated_Code/PE_LDD.c **** **         Fills a memory area block by a specified value.
- 114:../Generated_Code/PE_LDD.c **** **     @param
- 115:../Generated_Code/PE_LDD.c **** **       SourceAddressPtr - Source address pointer.
- 116:../Generated_Code/PE_LDD.c **** **     @param
- 117:../Generated_Code/PE_LDD.c **** **       c - A value used to fill a memory block.
- 118:../Generated_Code/PE_LDD.c **** **     @param
- 119:../Generated_Code/PE_LDD.c **** **       len - Length of a memory block to fill.
- 120:../Generated_Code/PE_LDD.c **** */
- 121:../Generated_Code/PE_LDD.c **** /* ===================================================================*/
- 122:../Generated_Code/PE_LDD.c **** void PE_FillMemory(register void* SourceAddressPtr, register uint8_t c, register uint32_t len)
- 123:../Generated_Code/PE_LDD.c **** {
-  49              		.loc 1 123 0
+  81:../Generated_Code/PE_LDD.c ****     NULL
+  82:../Generated_Code/PE_LDD.c ****   };
+  83:../Generated_Code/PE_LDD.c **** 
+  84:../Generated_Code/PE_LDD.c **** /*
+  85:../Generated_Code/PE_LDD.c **** ** ===========================================================================
+  86:../Generated_Code/PE_LDD.c **** ** The array of clock frequencies in configured clock configurations.
+  87:../Generated_Code/PE_LDD.c **** ** ===========================================================================
+  88:../Generated_Code/PE_LDD.c **** */
+  89:../Generated_Code/PE_LDD.c **** /*! The array of clock configurations (frequencies) configured in configured clock configurations o
+  90:../Generated_Code/PE_LDD.c **** const TCpuClockConfiguration PE_CpuClockConfigurations[CPU_CLOCK_CONFIG_NUMBER] = {
+  91:../Generated_Code/PE_LDD.c ****   /* Clock configuration 0 */
+  92:../Generated_Code/PE_LDD.c ****   {
+  93:../Generated_Code/PE_LDD.c ****     CPU_CORE_CLK_HZ_CONFIG_0,          /*!< Core clock frequency in clock configuration 0 */
+  94:../Generated_Code/PE_LDD.c ****     CPU_BUS_CLK_HZ_CONFIG_0,           /*!< Bus clock frequency in clock configuration 0 */
+  95:../Generated_Code/PE_LDD.c ****     CPU_FLEXBUS_CLK_HZ_CONFIG_0,       /*!< Flexbus clock frequency in clock configuration 0 */
+  96:../Generated_Code/PE_LDD.c ****     CPU_FLASH_CLK_HZ_CONFIG_0,         /*!< FLASH clock frequency in clock configuration 0 */
+  97:../Generated_Code/PE_LDD.c ****     CPU_USB_CLK_HZ_CONFIG_0,           /*!< USB clock frequency in clock configuration 0 */
+  98:../Generated_Code/PE_LDD.c ****     CPU_PLL_FLL_CLK_HZ_CONFIG_0,       /*!< PLL/FLL clock frequency in clock configuration 0 */
+  99:../Generated_Code/PE_LDD.c ****     CPU_MCGIR_CLK_HZ_CONFIG_0,         /*!< MCG internal reference clock frequency in clock configu
+ 100:../Generated_Code/PE_LDD.c ****     CPU_OSCER_CLK_HZ_CONFIG_0,         /*!< System OSC external reference clock frequency in clock 
+ 101:../Generated_Code/PE_LDD.c ****     CPU_ERCLK32K_CLK_HZ_CONFIG_0,      /*!< External reference clock 32k frequency in clock configu
+ 102:../Generated_Code/PE_LDD.c ****     CPU_MCGFF_CLK_HZ_CONFIG_0          /*!< MCG fixed frequency clock */
+ 103:../Generated_Code/PE_LDD.c ****   }
+ 104:../Generated_Code/PE_LDD.c **** };
+ 105:../Generated_Code/PE_LDD.c **** 
+ 106:../Generated_Code/PE_LDD.c **** /*
+ 107:../Generated_Code/PE_LDD.c **** ** ===================================================================
+ 108:../Generated_Code/PE_LDD.c **** **     Method      :  Cpu_PE_FillMemory (component MKL25Z128LK4)
+ 109:../Generated_Code/PE_LDD.c **** */
+ 110:../Generated_Code/PE_LDD.c **** /*!
+ 111:../Generated_Code/PE_LDD.c **** **     @brief
+ 112:../Generated_Code/PE_LDD.c **** **         Fills a memory area block by a specified value.
+ 113:../Generated_Code/PE_LDD.c **** **     @param
+ 114:../Generated_Code/PE_LDD.c **** **       SourceAddressPtr - Source address pointer.
+ 115:../Generated_Code/PE_LDD.c **** **     @param
+ 116:../Generated_Code/PE_LDD.c **** **       c - A value used to fill a memory block.
+ 117:../Generated_Code/PE_LDD.c **** **     @param
+ 118:../Generated_Code/PE_LDD.c **** **       len - Length of a memory block to fill.
+ 119:../Generated_Code/PE_LDD.c **** */
+ 120:../Generated_Code/PE_LDD.c **** /* ===================================================================*/
+ 121:../Generated_Code/PE_LDD.c **** void PE_FillMemory(register void* SourceAddressPtr, register uint8_t c, register uint32_t len)
+ 122:../Generated_Code/PE_LDD.c **** {
+  49              		.loc 1 122 0
   50              		.cfi_startproc
   51 0000 90B5     		push	{r4, r7, lr}
   52              	.LCFI0:
@@ -180,26 +179,26 @@
   58              	.LCFI1:
   59              		.cfi_def_cfa_register 7
   60 0004 131C     		mov	r3, r2
- 124:../Generated_Code/PE_LDD.c ****   register uint8_t *ptr = (uint8_t*)SourceAddressPtr;
-  61              		.loc 1 124 0
+ 123:../Generated_Code/PE_LDD.c ****   register uint8_t *ptr = (uint8_t*)SourceAddressPtr;
+  61              		.loc 1 123 0
   62 0006 041C     		mov	r4, r0
- 125:../Generated_Code/PE_LDD.c **** 
- 126:../Generated_Code/PE_LDD.c ****   if (len > 0U) {
-  63              		.loc 1 126 0
+ 124:../Generated_Code/PE_LDD.c **** 
+ 125:../Generated_Code/PE_LDD.c ****   if (len > 0U) {
+  63              		.loc 1 125 0
   64 0008 002B     		cmp	r3, #0
   65 000a 0AD0     		beq	.L1
- 127:../Generated_Code/PE_LDD.c ****     while (len--) {
-  66              		.loc 1 127 0
+ 126:../Generated_Code/PE_LDD.c ****     while (len--) {
+  66              		.loc 1 126 0
   67 000c 02E0     		b	.L3
   68              	.L4:
- 128:../Generated_Code/PE_LDD.c ****       *ptr++ = c;
-  69              		.loc 1 128 0
+ 127:../Generated_Code/PE_LDD.c ****       *ptr++ = c;
+  69              		.loc 1 127 0
   70 000e 0A1C     		add	r2, r1, #0
   71 0010 2270     		strb	r2, [r4]
   72 0012 0134     		add	r4, r4, #1
   73              	.L3:
- 127:../Generated_Code/PE_LDD.c ****     while (len--) {
-  74              		.loc 1 127 0
+ 126:../Generated_Code/PE_LDD.c ****     while (len--) {
+  74              		.loc 1 126 0
   75 0014 1A1C     		mov	r2, r3
   76 0016 501E     		sub	r0, r2, #1
   77 0018 8241     		sbc	r2, r2, r0
@@ -208,10 +207,10 @@
   80 001e 002A     		cmp	r2, #0
   81 0020 F5D1     		bne	.L4
   82              	.L1:
- 129:../Generated_Code/PE_LDD.c ****     }
- 130:../Generated_Code/PE_LDD.c ****   }
- 131:../Generated_Code/PE_LDD.c **** }
-  83              		.loc 1 131 0
+ 128:../Generated_Code/PE_LDD.c ****     }
+ 129:../Generated_Code/PE_LDD.c ****   }
+ 130:../Generated_Code/PE_LDD.c **** }
+  83              		.loc 1 130 0
   84 0022 BD46     		mov	sp, r7
   85              		@ sp needed for prologue
   86 0024 90BD     		pop	{r4, r7, pc}
@@ -224,24 +223,24 @@
   94              		.thumb_func
   96              	PE_PeripheralUsed:
   97              	.LFB1:
- 132:../Generated_Code/PE_LDD.c **** 
- 133:../Generated_Code/PE_LDD.c **** /*
- 134:../Generated_Code/PE_LDD.c **** ** ===================================================================
- 135:../Generated_Code/PE_LDD.c **** **     Method      :  Cpu_PE_PeripheralUsed (component MKL25Z128LK4)
- 136:../Generated_Code/PE_LDD.c **** */
- 137:../Generated_Code/PE_LDD.c **** /*!
- 138:../Generated_Code/PE_LDD.c **** **     @brief
- 139:../Generated_Code/PE_LDD.c **** **         Returns information whether a peripheral is allocated by PEx 
- 140:../Generated_Code/PE_LDD.c **** **         or not.
- 141:../Generated_Code/PE_LDD.c **** **     @param
- 142:../Generated_Code/PE_LDD.c **** **       PrphBaseAddress - Base address of a peripheral.
- 143:../Generated_Code/PE_LDD.c **** **     @return
- 144:../Generated_Code/PE_LDD.c **** **       TRUE if a peripheral is used by PEx or FALSE if it isn't used.
- 145:../Generated_Code/PE_LDD.c **** */
- 146:../Generated_Code/PE_LDD.c **** /* ===================================================================*/
- 147:../Generated_Code/PE_LDD.c **** bool PE_PeripheralUsed(uint32_t PrphBaseAddress)
- 148:../Generated_Code/PE_LDD.c **** {
-  98              		.loc 1 148 0
+ 131:../Generated_Code/PE_LDD.c **** 
+ 132:../Generated_Code/PE_LDD.c **** /*
+ 133:../Generated_Code/PE_LDD.c **** ** ===================================================================
+ 134:../Generated_Code/PE_LDD.c **** **     Method      :  Cpu_PE_PeripheralUsed (component MKL25Z128LK4)
+ 135:../Generated_Code/PE_LDD.c **** */
+ 136:../Generated_Code/PE_LDD.c **** /*!
+ 137:../Generated_Code/PE_LDD.c **** **     @brief
+ 138:../Generated_Code/PE_LDD.c **** **         Returns information whether a peripheral is allocated by PEx 
+ 139:../Generated_Code/PE_LDD.c **** **         or not.
+ 140:../Generated_Code/PE_LDD.c **** **     @param
+ 141:../Generated_Code/PE_LDD.c **** **       PrphBaseAddress - Base address of a peripheral.
+ 142:../Generated_Code/PE_LDD.c **** **     @return
+ 143:../Generated_Code/PE_LDD.c **** **       TRUE if a peripheral is used by PEx or FALSE if it isn't used.
+ 144:../Generated_Code/PE_LDD.c **** */
+ 145:../Generated_Code/PE_LDD.c **** /* ===================================================================*/
+ 146:../Generated_Code/PE_LDD.c **** bool PE_PeripheralUsed(uint32_t PrphBaseAddress)
+ 147:../Generated_Code/PE_LDD.c **** {
+  98              		.loc 1 147 0
   99              		.cfi_startproc
  100 0000 80B5     		push	{r7, lr}
  101              	.LCFI2:
@@ -255,163 +254,157 @@
  109              	.LCFI4:
  110              		.cfi_def_cfa_register 7
  111 0006 7860     		str	r0, [r7, #4]
- 149:../Generated_Code/PE_LDD.c ****   bool result = FALSE;
- 112              		.loc 1 149 0
+ 148:../Generated_Code/PE_LDD.c ****   bool result = FALSE;
+ 112              		.loc 1 148 0
  113 0008 3B1C     		mov	r3, r7
  114 000a 0F33     		add	r3, r3, #15
  115 000c 0022     		mov	r2, #0
  116 000e 1A70     		strb	r2, [r3]
- 150:../Generated_Code/PE_LDD.c **** 
- 151:../Generated_Code/PE_LDD.c ****   switch (PrphBaseAddress) {
- 117              		.loc 1 151 0
+ 149:../Generated_Code/PE_LDD.c **** 
+ 150:../Generated_Code/PE_LDD.c ****   switch (PrphBaseAddress) {
+ 117              		.loc 1 150 0
  118 0010 7B68     		ldr	r3, [r7, #4]
- 119 0012 134A     		ldr	r2, .L11
+ 119 0012 114A     		ldr	r2, .L11
  120 0014 9342     		cmp	r3, r2
- 121 0016 15D0     		beq	.L7
- 122 0018 114A     		ldr	r2, .L11
+ 121 0016 12D0     		beq	.L7
+ 122 0018 0F4A     		ldr	r2, .L11
  123 001a 9342     		cmp	r3, r2
- 124 001c 09D8     		bhi	.L8
- 125 001e 114A     		ldr	r2, .L11+4
+ 124 001c 06D8     		bhi	.L8
+ 125 001e 0F4A     		ldr	r2, .L11+4
  126 0020 9342     		cmp	r3, r2
- 127 0022 0FD0     		beq	.L7
- 128 0024 104A     		ldr	r2, .L11+8
+ 127 0022 0CD0     		beq	.L7
+ 128 0024 0E4A     		ldr	r2, .L11+8
  129 0026 9342     		cmp	r3, r2
- 130 0028 0CD0     		beq	.L7
- 131 002a 104A     		ldr	r2, .L11+12
- 132 002c 9342     		cmp	r3, r2
- 133 002e 09D0     		beq	.L7
- 134 0030 0DE0     		b	.L6
- 135              	.L8:
- 136 0032 0F4A     		ldr	r2, .L11+16
+ 130 0028 09D0     		beq	.L7
+ 131 002a 0DE0     		b	.L6
+ 132              	.L8:
+ 133 002c 0D4A     		ldr	r2, .L11+12
+ 134 002e 9342     		cmp	r3, r2
+ 135 0030 05D0     		beq	.L7
+ 136 0032 0D4A     		ldr	r2, .L11+16
  137 0034 9342     		cmp	r3, r2
- 138 0036 05D0     		beq	.L7
- 139 0038 0E4A     		ldr	r2, .L11+20
+ 138 0036 02D0     		beq	.L7
+ 139 0038 0C4A     		ldr	r2, .L11+20
  140 003a 9342     		cmp	r3, r2
- 141 003c 02D0     		beq	.L7
- 142 003e 0E4A     		ldr	r2, .L11+24
- 143 0040 9342     		cmp	r3, r2
- 144 0042 04D1     		bne	.L6
- 145              	.L7:
- 152:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) UART0 */
- 153:../Generated_Code/PE_LDD.c ****     case 0x4006A000UL:
- 154:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) TPM0 */
- 155:../Generated_Code/PE_LDD.c ****     case 0x40038000UL:
- 156:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) PTA */
- 157:../Generated_Code/PE_LDD.c ****     case 0x400FF000UL:
- 158:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) PTE */
- 159:../Generated_Code/PE_LDD.c ****     case 0x400FF100UL:
- 160:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) PTB */
- 161:../Generated_Code/PE_LDD.c ****     case 0x400FF040UL:
- 162:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) PTC */
- 163:../Generated_Code/PE_LDD.c ****     case 0x400FF080UL:
- 164:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) PTD */
- 165:../Generated_Code/PE_LDD.c ****     case 0x400FF0C0UL:
- 166:../Generated_Code/PE_LDD.c ****       result = TRUE;
- 146              		.loc 1 166 0
- 147 0044 3B1C     		mov	r3, r7
- 148 0046 0F33     		add	r3, r3, #15
- 149 0048 0122     		mov	r2, #1
- 150 004a 1A70     		strb	r2, [r3]
- 167:../Generated_Code/PE_LDD.c ****       break;
- 151              		.loc 1 167 0
- 152 004c 00E0     		b	.L9
- 153              	.L6:
- 168:../Generated_Code/PE_LDD.c ****     default:
- 169:../Generated_Code/PE_LDD.c ****       break;
- 154              		.loc 1 169 0
- 155 004e C046     		mov	r8, r8
- 156              	.L9:
- 170:../Generated_Code/PE_LDD.c ****   }
- 171:../Generated_Code/PE_LDD.c ****   return result;
- 157              		.loc 1 171 0
- 158 0050 3B1C     		mov	r3, r7
- 159 0052 0F33     		add	r3, r3, #15
- 160 0054 1B78     		ldrb	r3, [r3]
- 172:../Generated_Code/PE_LDD.c **** }
- 161              		.loc 1 172 0
- 162 0056 181C     		mov	r0, r3
- 163 0058 BD46     		mov	sp, r7
- 164 005a 04B0     		add	sp, sp, #16
- 165              		@ sp needed for prologue
- 166 005c 80BD     		pop	{r7, pc}
- 167              	.L12:
- 168 005e C046     		.align	2
- 169              	.L11:
- 170 0060 40F00F40 		.word	1074786368
- 171 0064 00A00640 		.word	1074176000
- 172 0068 00F00F40 		.word	1074786304
- 173 006c 00800340 		.word	1073971200
- 174 0070 C0F00F40 		.word	1074786496
- 175 0074 00F10F40 		.word	1074786560
- 176 0078 80F00F40 		.word	1074786432
- 177              		.cfi_endproc
- 178              	.LFE1:
- 180              		.section	.text.LDD_SetClockConfiguration,"ax",%progbits
- 181              		.align	2
- 182              		.global	LDD_SetClockConfiguration
- 183              		.code	16
- 184              		.thumb_func
- 186              	LDD_SetClockConfiguration:
- 187              	.LFB2:
- 173:../Generated_Code/PE_LDD.c **** 
- 174:../Generated_Code/PE_LDD.c **** /*
- 175:../Generated_Code/PE_LDD.c **** ** ===================================================================
- 176:../Generated_Code/PE_LDD.c **** **     Method      :  Cpu_LDD_SetClockConfiguration (component MKL25Z128LK4)
- 177:../Generated_Code/PE_LDD.c **** */
- 178:../Generated_Code/PE_LDD.c **** /*!
- 179:../Generated_Code/PE_LDD.c **** **     @brief
- 180:../Generated_Code/PE_LDD.c **** **         Changes the clock configuration of all LDD components in a 
- 181:../Generated_Code/PE_LDD.c **** **         project.
- 182:../Generated_Code/PE_LDD.c **** **     @param
- 183:../Generated_Code/PE_LDD.c **** **       ClockConfiguration - New CPU clock configuration changed by CPU SetClockConfiguration meth
- 184:../Generated_Code/PE_LDD.c **** */
- 185:../Generated_Code/PE_LDD.c **** /* ===================================================================*/
- 186:../Generated_Code/PE_LDD.c **** void LDD_SetClockConfiguration(LDD_TClockConfiguration ClockConfiguration)
- 187:../Generated_Code/PE_LDD.c **** {
- 188              		.loc 1 187 0
- 189              		.cfi_startproc
- 190 0000 80B5     		push	{r7, lr}
- 191              	.LCFI5:
- 192              		.cfi_def_cfa_offset 8
- 193              		.cfi_offset 7, -8
- 194              		.cfi_offset 14, -4
- 195 0002 82B0     		sub	sp, sp, #8
- 196              	.LCFI6:
- 197              		.cfi_def_cfa_offset 16
- 198 0004 00AF     		add	r7, sp, #0
- 199              	.LCFI7:
- 200              		.cfi_def_cfa_register 7
- 201 0006 021C     		mov	r2, r0
- 202 0008 FB1D     		add	r3, r7, #7
- 203 000a 1A70     		strb	r2, [r3]
- 188:../Generated_Code/PE_LDD.c ****   (void)ClockConfiguration;            /*!< Parameter is not used, suppress unused argument warning
- 189:../Generated_Code/PE_LDD.c ****   /* Just one clock configuration defined in CPU component. */
- 190:../Generated_Code/PE_LDD.c **** }
- 204              		.loc 1 190 0
- 205 000c BD46     		mov	sp, r7
- 206 000e 02B0     		add	sp, sp, #8
- 207              		@ sp needed for prologue
- 208 0010 80BD     		pop	{r7, pc}
- 209              		.cfi_endproc
- 210              	.LFE2:
- 212 0012 C046     		.text
- 213              	.Letext0:
- 214              		.file 2 "D:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
- 215              		.file 3 "../Generated_Code/PE_Types.h"
- 216              		.file 4 "../Generated_Code/Cpu.h"
+ 141 003c 04D1     		bne	.L6
+ 142              	.L7:
+ 151:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) UART0 */
+ 152:../Generated_Code/PE_LDD.c ****     case 0x4006A000UL:
+ 153:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) TPM0 */
+ 154:../Generated_Code/PE_LDD.c ****     case 0x40038000UL:
+ 155:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) PTA */
+ 156:../Generated_Code/PE_LDD.c ****     case 0x400FF000UL:
+ 157:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) PTE */
+ 158:../Generated_Code/PE_LDD.c ****     case 0x400FF100UL:
+ 159:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) PTB */
+ 160:../Generated_Code/PE_LDD.c ****     case 0x400FF040UL:
+ 161:../Generated_Code/PE_LDD.c ****     /* Base address allocated by peripheral(s) PTC */
+ 162:../Generated_Code/PE_LDD.c ****     case 0x400FF080UL:
+ 163:../Generated_Code/PE_LDD.c ****       result = TRUE;
+ 143              		.loc 1 163 0
+ 144 003e 3B1C     		mov	r3, r7
+ 145 0040 0F33     		add	r3, r3, #15
+ 146 0042 0122     		mov	r2, #1
+ 147 0044 1A70     		strb	r2, [r3]
+ 164:../Generated_Code/PE_LDD.c ****       break;
+ 148              		.loc 1 164 0
+ 149 0046 00E0     		b	.L9
+ 150              	.L6:
+ 165:../Generated_Code/PE_LDD.c ****     default:
+ 166:../Generated_Code/PE_LDD.c ****       break;
+ 151              		.loc 1 166 0
+ 152 0048 C046     		mov	r8, r8
+ 153              	.L9:
+ 167:../Generated_Code/PE_LDD.c ****   }
+ 168:../Generated_Code/PE_LDD.c ****   return result;
+ 154              		.loc 1 168 0
+ 155 004a 3B1C     		mov	r3, r7
+ 156 004c 0F33     		add	r3, r3, #15
+ 157 004e 1B78     		ldrb	r3, [r3]
+ 169:../Generated_Code/PE_LDD.c **** }
+ 158              		.loc 1 169 0
+ 159 0050 181C     		mov	r0, r3
+ 160 0052 BD46     		mov	sp, r7
+ 161 0054 04B0     		add	sp, sp, #16
+ 162              		@ sp needed for prologue
+ 163 0056 80BD     		pop	{r7, pc}
+ 164              	.L12:
+ 165              		.align	2
+ 166              	.L11:
+ 167 0058 00F00F40 		.word	1074786304
+ 168 005c 00800340 		.word	1073971200
+ 169 0060 00A00640 		.word	1074176000
+ 170 0064 80F00F40 		.word	1074786432
+ 171 0068 00F10F40 		.word	1074786560
+ 172 006c 40F00F40 		.word	1074786368
+ 173              		.cfi_endproc
+ 174              	.LFE1:
+ 176              		.section	.text.LDD_SetClockConfiguration,"ax",%progbits
+ 177              		.align	2
+ 178              		.global	LDD_SetClockConfiguration
+ 179              		.code	16
+ 180              		.thumb_func
+ 182              	LDD_SetClockConfiguration:
+ 183              	.LFB2:
+ 170:../Generated_Code/PE_LDD.c **** 
+ 171:../Generated_Code/PE_LDD.c **** /*
+ 172:../Generated_Code/PE_LDD.c **** ** ===================================================================
+ 173:../Generated_Code/PE_LDD.c **** **     Method      :  Cpu_LDD_SetClockConfiguration (component MKL25Z128LK4)
+ 174:../Generated_Code/PE_LDD.c **** */
+ 175:../Generated_Code/PE_LDD.c **** /*!
+ 176:../Generated_Code/PE_LDD.c **** **     @brief
+ 177:../Generated_Code/PE_LDD.c **** **         Changes the clock configuration of all LDD components in a 
+ 178:../Generated_Code/PE_LDD.c **** **         project.
+ 179:../Generated_Code/PE_LDD.c **** **     @param
+ 180:../Generated_Code/PE_LDD.c **** **       ClockConfiguration - New CPU clock configuration changed by CPU SetClockConfiguration meth
+ 181:../Generated_Code/PE_LDD.c **** */
+ 182:../Generated_Code/PE_LDD.c **** /* ===================================================================*/
+ 183:../Generated_Code/PE_LDD.c **** void LDD_SetClockConfiguration(LDD_TClockConfiguration ClockConfiguration)
+ 184:../Generated_Code/PE_LDD.c **** {
+ 184              		.loc 1 184 0
+ 185              		.cfi_startproc
+ 186 0000 80B5     		push	{r7, lr}
+ 187              	.LCFI5:
+ 188              		.cfi_def_cfa_offset 8
+ 189              		.cfi_offset 7, -8
+ 190              		.cfi_offset 14, -4
+ 191 0002 82B0     		sub	sp, sp, #8
+ 192              	.LCFI6:
+ 193              		.cfi_def_cfa_offset 16
+ 194 0004 00AF     		add	r7, sp, #0
+ 195              	.LCFI7:
+ 196              		.cfi_def_cfa_register 7
+ 197 0006 021C     		mov	r2, r0
+ 198 0008 FB1D     		add	r3, r7, #7
+ 199 000a 1A70     		strb	r2, [r3]
+ 185:../Generated_Code/PE_LDD.c ****   (void)ClockConfiguration;            /*!< Parameter is not used, suppress unused argument warning
+ 186:../Generated_Code/PE_LDD.c ****   /* Just one clock configuration defined in CPU component. */
+ 187:../Generated_Code/PE_LDD.c **** }
+ 200              		.loc 1 187 0
+ 201 000c BD46     		mov	sp, r7
+ 202 000e 02B0     		add	sp, sp, #8
+ 203              		@ sp needed for prologue
+ 204 0010 80BD     		pop	{r7, pc}
+ 205              		.cfi_endproc
+ 206              	.LFE2:
+ 208 0012 C046     		.text
+ 209              	.Letext0:
+ 210              		.file 2 "D:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 211              		.file 3 "../Generated_Code/PE_Types.h"
+ 212              		.file 4 "../Generated_Code/Cpu.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 PE_LDD.c
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccnL2Sta.s:22     .bss.PE_LDD_DeviceDataList:00000000 PE_LDD_DeviceDataList
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccnL2Sta.s:19     .bss.PE_LDD_DeviceDataList:00000000 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccnL2Sta.s:29     .rodata.PE_CpuClockConfigurations:00000000 PE_CpuClockConfigurations
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccnL2Sta.s:26     .rodata.PE_CpuClockConfigurations:00000000 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccnL2Sta.s:41     .text.PE_FillMemory:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccnL2Sta.s:46     .text.PE_FillMemory:00000000 PE_FillMemory
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccnL2Sta.s:91     .text.PE_PeripheralUsed:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccnL2Sta.s:96     .text.PE_PeripheralUsed:00000000 PE_PeripheralUsed
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccnL2Sta.s:170    .text.PE_PeripheralUsed:00000060 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccnL2Sta.s:181    .text.LDD_SetClockConfiguration:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccnL2Sta.s:186    .text.LDD_SetClockConfiguration:00000000 LDD_SetClockConfiguration
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccDi6ieQ.s:22     .bss.PE_LDD_DeviceDataList:00000000 PE_LDD_DeviceDataList
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccDi6ieQ.s:19     .bss.PE_LDD_DeviceDataList:00000000 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccDi6ieQ.s:29     .rodata.PE_CpuClockConfigurations:00000000 PE_CpuClockConfigurations
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccDi6ieQ.s:26     .rodata.PE_CpuClockConfigurations:00000000 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccDi6ieQ.s:41     .text.PE_FillMemory:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccDi6ieQ.s:46     .text.PE_FillMemory:00000000 PE_FillMemory
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccDi6ieQ.s:91     .text.PE_PeripheralUsed:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccDi6ieQ.s:96     .text.PE_PeripheralUsed:00000000 PE_PeripheralUsed
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccDi6ieQ.s:167    .text.PE_PeripheralUsed:00000058 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccDi6ieQ.s:177    .text.LDD_SetClockConfiguration:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccDi6ieQ.s:182    .text.LDD_SetClockConfiguration:00000000 LDD_SetClockConfiguration
                      .debug_frame:00000010 $d
 
 NO UNDEFINED SYMBOLS

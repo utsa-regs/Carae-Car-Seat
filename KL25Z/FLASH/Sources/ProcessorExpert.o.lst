@@ -32,48 +32,47 @@
   36              		.comm	childInSeat,1,1
   37              		.comm	childInCar,1,1
   38              		.comm	motion1,1,1
-  39              		.comm	motion2,1,1
-  40              		.comm	tooHotTeensy,1,1
-  41              		.comm	tooHotTherm,1,1
-  42              		.comm	comm,1,1
-  43              		.comm	temp,4,4
-  44              		.section	.rodata
-  45              		.align	2
-  46              	.LC0:
-  47 0000 48656C6C 		.ascii	"Hello!\015\000"
-  47      6F210D00 
-  48              		.align	2
-  49              	.LC8:
-  50 0008 636F6D6D 		.ascii	"communicating\000"
-  50      756E6963 
-  50      6174696E 
-  50      6700
-  51 0016 0000     		.align	2
-  52              	.LC10:
-  53 0018 6E6F7420 		.ascii	"not communicating\000"
-  53      636F6D6D 
-  53      756E6963 
-  53      6174696E 
-  53      6700
-  54              		.global	__aeabi_i2d
-  55              		.global	__aeabi_ddiv
-  56              		.global	__aeabi_d2f
-  57              		.global	__aeabi_fcmpge
-  58              		.global	__aeabi_f2d
-  59 002a 0000     		.align	2
-  60              	.LC17:
-  61 002c 256600   		.ascii	"%f\000"
-  62 002f 00       		.align	2
-  63              	.LC21:
-  64 0030 25377500 		.ascii	"%7u\000"
-  65              		.section	.text.main,"ax",%progbits
-  66              		.align	2
-  67              		.global	main
-  68              		.code	16
-  69              		.thumb_func
-  71              	main:
-  72              	.LFB0:
-  73              		.file 1 "../Sources/ProcessorExpert.c"
+  39              		.comm	tooHotTeensy,1,1
+  40              		.comm	tooHotTherm,1,1
+  41              		.comm	comm,1,1
+  42              		.comm	temp,4,4
+  43              		.section	.rodata
+  44              		.align	2
+  45              	.LC0:
+  46 0000 48656C6C 		.ascii	"Hello!\015\000"
+  46      6F210D00 
+  47              		.align	2
+  48              	.LC7:
+  49 0008 636F6D6D 		.ascii	"communicating\000"
+  49      756E6963 
+  49      6174696E 
+  49      6700
+  50 0016 0000     		.align	2
+  51              	.LC9:
+  52 0018 6E6F7420 		.ascii	"not communicating\000"
+  52      636F6D6D 
+  52      756E6963 
+  52      6174696E 
+  52      6700
+  53              		.global	__aeabi_i2d
+  54              		.global	__aeabi_ddiv
+  55              		.global	__aeabi_d2f
+  56              		.global	__aeabi_fcmpge
+  57              		.global	__aeabi_f2d
+  58 002a 0000     		.align	2
+  59              	.LC16:
+  60 002c 256600   		.ascii	"%f\000"
+  61 002f 00       		.align	2
+  62              	.LC20:
+  63 0030 25377500 		.ascii	"%7u\000"
+  64              		.section	.text.main,"ax",%progbits
+  65              		.align	2
+  66              		.global	main
+  67              		.code	16
+  68              		.thumb_func
+  70              	main:
+  71              	.LFB0:
+  72              		.file 1 "../Sources/ProcessorExpert.c"
    1:../Sources/ProcessorExpert.c **** /** ###################################################################
    2:../Sources/ProcessorExpert.c **** **     Filename    : ProcessorExpert.c
    3:../Sources/ProcessorExpert.c **** **     Project     : ProcessorExpert
@@ -85,680 +84,670 @@
    9:../Sources/ProcessorExpert.c **** **         Main module.
   10:../Sources/ProcessorExpert.c **** **         This module contains user's application code.
   11:../Sources/ProcessorExpert.c **** **     Settings    :	in:		B0 = Seat Sensor, B1 = Belt Sensor, B2 = Thermometer, C17 = Thermal Camer
-  12:../Sources/ProcessorExpert.c **** **     					out:	A12 = Status of child to Sender, A13 = Relay 1-1 (thermal), E5 = Relay 1-2 (everyt
-  13:../Sources/ProcessorExpert.c **** **     							C2 = buzzer
-  14:../Sources/ProcessorExpert.c **** **     Contents    :
-  15:../Sources/ProcessorExpert.c **** **         No public methods
-  16:../Sources/ProcessorExpert.c **** **
-  17:../Sources/ProcessorExpert.c **** ** ###################################################################*/
-  18:../Sources/ProcessorExpert.c **** /* MODULE ProcessorExpert */
-  19:../Sources/ProcessorExpert.c **** 
+  12:../Sources/ProcessorExpert.c **** **     							E2 = PIR (Right), D2 = PIR (Left)
+  13:../Sources/ProcessorExpert.c **** **     					out:	A12 = Status of child to Sender, A13 = Relay 1-1 (thermal), E5 = Relay 1-2 (everyt
+  14:../Sources/ProcessorExpert.c **** **     							C2 = buzzer
+  15:../Sources/ProcessorExpert.c **** **     Contents    :
+  16:../Sources/ProcessorExpert.c **** **         No public methods
+  17:../Sources/ProcessorExpert.c **** **
+  18:../Sources/ProcessorExpert.c **** ** ###################################################################*/
+  19:../Sources/ProcessorExpert.c **** /* MODULE ProcessorExpert */
   20:../Sources/ProcessorExpert.c **** 
-  21:../Sources/ProcessorExpert.c **** /* Including needed modules to compile this module/procedure */
-  22:../Sources/ProcessorExpert.c **** #include "Cpu.h"
-  23:../Sources/ProcessorExpert.c **** #include "Events.h"
-  24:../Sources/ProcessorExpert.c **** #include "CsIO1.h"
-  25:../Sources/ProcessorExpert.c **** #include "IO1.h"
-  26:../Sources/ProcessorExpert.c **** #include "ADC1.h"
-  27:../Sources/ProcessorExpert.c **** #include "DMA1.h"
-  28:../Sources/ProcessorExpert.c **** #include "TU1.h"
-  29:../Sources/ProcessorExpert.c **** #include "A12.h"
-  30:../Sources/ProcessorExpert.c **** #include "BitIoLdd1.h"
-  31:../Sources/ProcessorExpert.c **** #include "A13.h"
-  32:../Sources/ProcessorExpert.c **** #include "BitIoLdd2.h"
-  33:../Sources/ProcessorExpert.c **** #include "E5.h"
-  34:../Sources/ProcessorExpert.c **** #include "BitIoLdd3.h"
-  35:../Sources/ProcessorExpert.c **** #include "B9.h"
-  36:../Sources/ProcessorExpert.c **** #include "BitIoLdd4.h"
-  37:../Sources/ProcessorExpert.c **** #include "C17.h"
-  38:../Sources/ProcessorExpert.c **** #include "BitIoLdd6.h"
-  39:../Sources/ProcessorExpert.c **** #include "C16.h"
-  40:../Sources/ProcessorExpert.c **** #include "BitIoLdd5.h"
-  41:../Sources/ProcessorExpert.c **** #include "C2.h"
-  42:../Sources/ProcessorExpert.c **** #include "BitIoLdd7.h"
-  43:../Sources/ProcessorExpert.c **** #include "E2.h"
-  44:../Sources/ProcessorExpert.c **** #include "BitIoLdd8.h"
-  45:../Sources/ProcessorExpert.c **** #include "D2.h"
-  46:../Sources/ProcessorExpert.c **** #include "BitIoLdd9.h"
-  47:../Sources/ProcessorExpert.c **** /* Including shared modules, which are used for whole project */
-  48:../Sources/ProcessorExpert.c **** #include "PE_Types.h"
-  49:../Sources/ProcessorExpert.c **** #include "PE_Error.h"
-  50:../Sources/ProcessorExpert.c **** #include "PE_Const.h"
-  51:../Sources/ProcessorExpert.c **** #include "IO_Map.h"
-  52:../Sources/ProcessorExpert.c **** 
-  53:../Sources/ProcessorExpert.c **** /* User includes (#include below this line is not maintained by Processor Expert) */
-  54:../Sources/ProcessorExpert.c **** #include "my.h"
-  55:../Sources/ProcessorExpert.c **** 
-  56:../Sources/ProcessorExpert.c **** // size of the channel configuration array
-  57:../Sources/ProcessorExpert.c **** #define ADC_CHANNELS_COUNT 3
-  58:../Sources/ProcessorExpert.c **** #define True 1
-  59:../Sources/ProcessorExpert.c **** #define False 0
-  60:../Sources/ProcessorExpert.c **** 
-  61:../Sources/ProcessorExpert.c **** // value for CFG2 array selecting MUX A pins or default
-  62:../Sources/ProcessorExpert.c **** #define PIN_A (0) 
-  63:../Sources/ProcessorExpert.c **** // value for CFG2 array selecting MUX B pins
-  64:../Sources/ProcessorExpert.c **** #define PIN_B (ADC_CFG2_MUXSEL_MASK)
-  65:../Sources/ProcessorExpert.c **** 
-  66:../Sources/ProcessorExpert.c **** // configuration array for channels - channel numbers. Should ends with 0x1F which stops conversion
-  67:../Sources/ProcessorExpert.c **** // second configuration array corresponding to channels selecting A/B pins
-  68:../Sources/ProcessorExpert.c **** // For example: 0 + PIN_A corresponds to the pin ADC0_SE0,   5 + PIN_5 selects the pin ADC0_SE5b
-  69:../Sources/ProcessorExpert.c **** // You can use these arrays to reorder the measurement as you need
-  70:../Sources/ProcessorExpert.c **** const uint8_t ChannelsCfg [ADC_CHANNELS_COUNT + 1] =  { 8,       9,     12,   0x1F };
-  71:../Sources/ProcessorExpert.c **** const uint8_t ChannelsCfg2[ADC_CHANNELS_COUNT + 1] =  {PIN_A, PIN_A, PIN_A,    0 };
-  72:../Sources/ProcessorExpert.c **** 
-  73:../Sources/ProcessorExpert.c **** // buffer for resulting measured values
-  74:../Sources/ProcessorExpert.c **** uint16_t MeasuredValues[ADC_CHANNELS_COUNT];
-  75:../Sources/ProcessorExpert.c **** 
-  76:../Sources/ProcessorExpert.c **** // flag for end of measurement
-  77:../Sources/ProcessorExpert.c **** bool Measured;
-  78:../Sources/ProcessorExpert.c **** bool childInSeat;
-  79:../Sources/ProcessorExpert.c **** bool childInCar, motion1, motion2;
-  80:../Sources/ProcessorExpert.c **** bool tooHotTeensy, tooHotTherm;
-  81:../Sources/ProcessorExpert.c **** bool comm;
-  82:../Sources/ProcessorExpert.c **** float temp;
+  21:../Sources/ProcessorExpert.c **** 
+  22:../Sources/ProcessorExpert.c **** /* Including needed modules to compile this module/procedure */
+  23:../Sources/ProcessorExpert.c **** #include "Cpu.h"
+  24:../Sources/ProcessorExpert.c **** #include "Events.h"
+  25:../Sources/ProcessorExpert.c **** #include "CsIO1.h"
+  26:../Sources/ProcessorExpert.c **** #include "IO1.h"
+  27:../Sources/ProcessorExpert.c **** #include "ADC1.h"
+  28:../Sources/ProcessorExpert.c **** #include "DMA1.h"
+  29:../Sources/ProcessorExpert.c **** #include "TU1.h"
+  30:../Sources/ProcessorExpert.c **** #include "A12.h"
+  31:../Sources/ProcessorExpert.c **** #include "BitIoLdd1.h"
+  32:../Sources/ProcessorExpert.c **** #include "A13.h"
+  33:../Sources/ProcessorExpert.c **** #include "BitIoLdd2.h"
+  34:../Sources/ProcessorExpert.c **** #include "E5.h"
+  35:../Sources/ProcessorExpert.c **** #include "BitIoLdd3.h"
+  36:../Sources/ProcessorExpert.c **** #include "B9.h"
+  37:../Sources/ProcessorExpert.c **** #include "BitIoLdd4.h"
+  38:../Sources/ProcessorExpert.c **** #include "C17.h"
+  39:../Sources/ProcessorExpert.c **** #include "BitIoLdd6.h"
+  40:../Sources/ProcessorExpert.c **** #include "C16.h"
+  41:../Sources/ProcessorExpert.c **** #include "BitIoLdd5.h"
+  42:../Sources/ProcessorExpert.c **** #include "C2.h"
+  43:../Sources/ProcessorExpert.c **** #include "BitIoLdd7.h"
+  44:../Sources/ProcessorExpert.c **** #include "E2.h"
+  45:../Sources/ProcessorExpert.c **** #include "BitIoLdd8.h"
+  46:../Sources/ProcessorExpert.c **** /* Including shared modules, which are used for whole project */
+  47:../Sources/ProcessorExpert.c **** #include "PE_Types.h"
+  48:../Sources/ProcessorExpert.c **** #include "PE_Error.h"
+  49:../Sources/ProcessorExpert.c **** #include "PE_Const.h"
+  50:../Sources/ProcessorExpert.c **** #include "IO_Map.h"
+  51:../Sources/ProcessorExpert.c **** 
+  52:../Sources/ProcessorExpert.c **** /* User includes (#include below this line is not maintained by Processor Expert) */
+  53:../Sources/ProcessorExpert.c **** #include "my.h"
+  54:../Sources/ProcessorExpert.c **** 
+  55:../Sources/ProcessorExpert.c **** // size of the channel configuration array
+  56:../Sources/ProcessorExpert.c **** #define ADC_CHANNELS_COUNT 3
+  57:../Sources/ProcessorExpert.c **** #define True 1
+  58:../Sources/ProcessorExpert.c **** #define False 0
+  59:../Sources/ProcessorExpert.c **** 
+  60:../Sources/ProcessorExpert.c **** // value for CFG2 array selecting MUX A pins or default
+  61:../Sources/ProcessorExpert.c **** #define PIN_A (0) 
+  62:../Sources/ProcessorExpert.c **** // value for CFG2 array selecting MUX B pins
+  63:../Sources/ProcessorExpert.c **** #define PIN_B (ADC_CFG2_MUXSEL_MASK)
+  64:../Sources/ProcessorExpert.c **** 
+  65:../Sources/ProcessorExpert.c **** // configuration array for channels - channel numbers. Should ends with 0x1F which stops conversion
+  66:../Sources/ProcessorExpert.c **** // second configuration array corresponding to channels selecting A/B pins
+  67:../Sources/ProcessorExpert.c **** // For example: 0 + PIN_A corresponds to the pin ADC0_SE0,   5 + PIN_5 selects the pin ADC0_SE5b
+  68:../Sources/ProcessorExpert.c **** // You can use these arrays to reorder the measurement as you need
+  69:../Sources/ProcessorExpert.c **** const uint8_t ChannelsCfg [ADC_CHANNELS_COUNT + 1] =  { 8,       9,     12,   0x1F };
+  70:../Sources/ProcessorExpert.c **** const uint8_t ChannelsCfg2[ADC_CHANNELS_COUNT + 1] =  {PIN_A, PIN_A, PIN_A,    0 };
+  71:../Sources/ProcessorExpert.c **** 
+  72:../Sources/ProcessorExpert.c **** // buffer for resulting measured values
+  73:../Sources/ProcessorExpert.c **** uint16_t MeasuredValues[ADC_CHANNELS_COUNT];
+  74:../Sources/ProcessorExpert.c **** 
+  75:../Sources/ProcessorExpert.c **** // flag for end of measurement
+  76:../Sources/ProcessorExpert.c **** bool Measured;
+  77:../Sources/ProcessorExpert.c **** bool childInSeat;
+  78:../Sources/ProcessorExpert.c **** bool childInCar, motion1;
+  79:../Sources/ProcessorExpert.c **** bool tooHotTeensy, tooHotTherm;
+  80:../Sources/ProcessorExpert.c **** bool comm;
+  81:../Sources/ProcessorExpert.c **** float temp;
+  82:../Sources/ProcessorExpert.c **** 
   83:../Sources/ProcessorExpert.c **** 
-  84:../Sources/ProcessorExpert.c **** 
-  85:../Sources/ProcessorExpert.c **** /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
-  86:../Sources/ProcessorExpert.c **** int main(void)
-  87:../Sources/ProcessorExpert.c **** /*lint -restore Enable MISRA rule (6.3) checking. */
-  88:../Sources/ProcessorExpert.c **** {
-  74              		.loc 1 88 0
-  75              		.cfi_startproc
-  76 0000 90B5     		push	{r4, r7, lr}
-  77              	.LCFI0:
-  78              		.cfi_def_cfa_offset 12
-  79              		.cfi_offset 4, -12
-  80              		.cfi_offset 7, -8
-  81              		.cfi_offset 14, -4
-  82 0002 83B0     		sub	sp, sp, #12
-  83              	.LCFI1:
-  84              		.cfi_def_cfa_offset 24
-  85 0004 00AF     		add	r7, sp, #0
-  86              	.LCFI2:
-  87              		.cfi_def_cfa_register 7
-  89:../Sources/ProcessorExpert.c ****   /* Write your local variable definition here */
-  90:../Sources/ProcessorExpert.c **** 
-  91:../Sources/ProcessorExpert.c ****   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
-  92:../Sources/ProcessorExpert.c ****   PE_low_level_init();
-  88              		.loc 1 92 0
-  89 0006 FFF7FEFF 		bl	PE_low_level_init
-  93:../Sources/ProcessorExpert.c ****   /*** End of Processor Expert internal initialization.                    ***/
-  94:../Sources/ProcessorExpert.c ****   /* Write your local variable definition here */
-  95:../Sources/ProcessorExpert.c ****   byte i;
-  96:../Sources/ProcessorExpert.c ****   /*** Processor Expert internal initialisation. DON'T REMOVE THIS CODE!!! ***/
-  97:../Sources/ProcessorExpert.c ****   PE_low_level_init();
-  90              		.loc 1 97 0
-  91 000a FFF7FEFF 		bl	PE_low_level_init
-  98:../Sources/ProcessorExpert.c ****   /*** End of Processor Expert internal initialisation.                    ***/
-  99:../Sources/ProcessorExpert.c **** 
- 100:../Sources/ProcessorExpert.c ****   printf ("Hello!\r\n");
-  92              		.loc 1 100 0
-  93 000e AA4B     		ldr	r3, .L28+8
-  94 0010 181C     		mov	r0, r3
-  95 0012 FFF7FEFF 		bl	puts
- 101:../Sources/ProcessorExpert.c **** 
- 102:../Sources/ProcessorExpert.c ****   // reset flag 
- 103:../Sources/ProcessorExpert.c ****   Measured = FALSE;
-  96              		.loc 1 103 0
-  97 0016 A94B     		ldr	r3, .L28+12
-  98 0018 0022     		mov	r2, #0
-  99 001a 1A70     		strb	r2, [r3]
- 104:../Sources/ProcessorExpert.c ****   C17_SetDir(False);
- 100              		.loc 1 104 0
- 101 001c A84B     		ldr	r3, .L28+16
- 102 001e 9B69     		ldr	r3, [r3, #24]
- 103 0020 181C     		mov	r0, r3
- 104 0022 0021     		mov	r1, #0
- 105 0024 FFF7FEFF 		bl	BitIoLdd6_SetDir
- 105:../Sources/ProcessorExpert.c ****   C16_SetDir(False);
- 106              		.loc 1 105 0
- 107 0028 A54B     		ldr	r3, .L28+16
- 108 002a DB69     		ldr	r3, [r3, #28]
- 109 002c 181C     		mov	r0, r3
- 110 002e 0021     		mov	r1, #0
- 111 0030 FFF7FEFF 		bl	BitIoLdd5_SetDir
- 106:../Sources/ProcessorExpert.c ****   // Initialise ADC now
- 107:../Sources/ProcessorExpert.c ****   ADC1_Init();
- 112              		.loc 1 107 0
- 113 0034 FFF7FEFF 		bl	ADC1_Init
- 108:../Sources/ProcessorExpert.c ****   // Initialise DMA now  
- 109:../Sources/ProcessorExpert.c ****   DMA1_Init();
- 114              		.loc 1 109 0
- 115 0038 FFF7FEFF 		bl	DMA1_Init
- 116              	.L25:
- 110:../Sources/ProcessorExpert.c ****   // loop forever  
- 111:../Sources/ProcessorExpert.c ****   while (TRUE) {
- 112:../Sources/ProcessorExpert.c ****     tooHotTeensy = C17_GetVal();
- 117              		.loc 1 112 0
- 118 003c A04B     		ldr	r3, .L28+16
- 119 003e 9B69     		ldr	r3, [r3, #24]
- 120 0040 181C     		mov	r0, r3
- 121 0042 FFF7FEFF 		bl	BitIoLdd6_GetVal
- 122 0046 031C     		mov	r3, r0
- 123 0048 1A1C     		mov	r2, r3
- 124 004a 9E4B     		ldr	r3, .L28+20
- 125 004c 1A70     		strb	r2, [r3]
- 113:../Sources/ProcessorExpert.c ****     comm = C16_GetVal();
- 126              		.loc 1 113 0
- 127 004e 9C4B     		ldr	r3, .L28+16
- 128 0050 DB69     		ldr	r3, [r3, #28]
- 129 0052 181C     		mov	r0, r3
- 130 0054 FFF7FEFF 		bl	BitIoLdd5_GetVal
- 131 0058 031C     		mov	r3, r0
- 132 005a 1A1C     		mov	r2, r3
- 133 005c 9A4B     		ldr	r3, .L28+24
- 134 005e 1A70     		strb	r2, [r3]
- 114:../Sources/ProcessorExpert.c ****     motion1 = E2_GetVal();			// right side of chair
- 135              		.loc 1 114 0
- 136 0060 974B     		ldr	r3, .L28+16
- 137 0062 5B6A     		ldr	r3, [r3, #36]
- 138 0064 181C     		mov	r0, r3
- 139 0066 FFF7FEFF 		bl	BitIoLdd8_GetVal
- 140 006a 031C     		mov	r3, r0
- 141 006c 1A1C     		mov	r2, r3
- 142 006e 974B     		ldr	r3, .L28+28
- 143 0070 1A70     		strb	r2, [r3]
- 115:../Sources/ProcessorExpert.c ****     motion2 = D2_GetVal();			// left side of chair
- 144              		.loc 1 115 0
- 145 0072 934B     		ldr	r3, .L28+16
- 146 0074 9B6A     		ldr	r3, [r3, #40]
- 147 0076 181C     		mov	r0, r3
- 148 0078 FFF7FEFF 		bl	BitIoLdd9_GetVal
- 149 007c 031C     		mov	r3, r0
- 150 007e 1A1C     		mov	r2, r3
- 151 0080 934B     		ldr	r3, .L28+32
- 152 0082 1A70     		strb	r2, [r3]
- 116:../Sources/ProcessorExpert.c ****     if(comm)
- 153              		.loc 1 116 0
- 154 0084 904B     		ldr	r3, .L28+24
- 155 0086 1B78     		ldrb	r3, [r3]
- 156 0088 002B     		cmp	r3, #0
- 157 008a 04D0     		beq	.L2
- 117:../Sources/ProcessorExpert.c ****     {
- 118:../Sources/ProcessorExpert.c ****     	printf("communicating\n");
- 158              		.loc 1 118 0
- 159 008c 914B     		ldr	r3, .L28+36
- 160 008e 181C     		mov	r0, r3
- 161 0090 FFF7FEFF 		bl	puts
- 162 0094 03E0     		b	.L3
- 163              	.L2:
- 119:../Sources/ProcessorExpert.c ****     } else
- 120:../Sources/ProcessorExpert.c ****     {
- 121:../Sources/ProcessorExpert.c ****     	printf("not communicating\n");
- 164              		.loc 1 121 0
- 165 0096 904B     		ldr	r3, .L28+40
- 166 0098 181C     		mov	r0, r3
- 167 009a FFF7FEFF 		bl	puts
- 168              	.L3:
- 122:../Sources/ProcessorExpert.c ****     }
- 123:../Sources/ProcessorExpert.c **** 	// clear flag  
- 124:../Sources/ProcessorExpert.c **** 	Measured = FALSE;	
- 169              		.loc 1 124 0
- 170 009e 874B     		ldr	r3, .L28+12
- 171 00a0 0022     		mov	r2, #0
- 172 00a2 1A70     		strb	r2, [r3]
- 125:../Sources/ProcessorExpert.c **** 	// reset DMA0 destination pointer to beginning of the buffer 
- 126:../Sources/ProcessorExpert.c **** 	DMA_DAR0 = (uint32_t) &MeasuredValues;
- 173              		.loc 1 126 0
- 174 00a4 8D4A     		ldr	r2, .L28+44
- 175 00a6 8E49     		ldr	r1, .L28+48
- 176 00a8 8223     		mov	r3, #130
- 177 00aa 5B00     		lsl	r3, r3, #1
- 178 00ac D150     		str	r1, [r2, r3]
- 127:../Sources/ProcessorExpert.c **** 	// reset DMA1 source pointer (MUX switching writes)
- 128:../Sources/ProcessorExpert.c **** 	DMA_SAR1 = (uint32_t) &ChannelsCfg2;
- 179              		.loc 1 128 0
- 180 00ae 8B4A     		ldr	r2, .L28+44
- 181 00b0 8C49     		ldr	r1, .L28+52
- 182 00b2 8823     		mov	r3, #136
- 183 00b4 5B00     		lsl	r3, r3, #1
- 184 00b6 D150     		str	r1, [r2, r3]
- 129:../Sources/ProcessorExpert.c **** 	// reset DMA2 source pointer (channel switching and conversion start writes)
- 130:../Sources/ProcessorExpert.c **** 	DMA_SAR2 = (uint32_t) &ChannelsCfg;
- 185              		.loc 1 130 0
- 186 00b8 884A     		ldr	r2, .L28+44
- 187 00ba 8B49     		ldr	r1, .L28+56
- 188 00bc 9023     		mov	r3, #144
- 189 00be 5B00     		lsl	r3, r3, #1
- 190 00c0 D150     		str	r1, [r2, r3]
- 131:../Sources/ProcessorExpert.c **** 	// number of total bytes to be transfered from the ADC result register A 
- 132:../Sources/ProcessorExpert.c **** 	DMA_DSR_BCR0 = ADC_CHANNELS_COUNT * 2;
- 191              		.loc 1 132 0
- 192 00c2 864A     		ldr	r2, .L28+44
- 193 00c4 8423     		mov	r3, #132
- 194 00c6 5B00     		lsl	r3, r3, #1
- 195 00c8 0621     		mov	r1, #6
- 196 00ca D150     		str	r1, [r2, r3]
- 133:../Sources/ProcessorExpert.c **** 	// set number of total bytes to be transfered to the ADC0_CFG2 
- 134:../Sources/ProcessorExpert.c **** 	DMA_DSR_BCR1 = ADC_CHANNELS_COUNT + 1;
- 197              		.loc 1 134 0
- 198 00cc 834A     		ldr	r2, .L28+44
- 199 00ce 8C23     		mov	r3, #140
- 200 00d0 5B00     		lsl	r3, r3, #1
- 201 00d2 0421     		mov	r1, #4
- 202 00d4 D150     		str	r1, [r2, r3]
- 135:../Sources/ProcessorExpert.c **** 	// set number of total bytes to be transfered to the ADC0_SC1A.  
- 136:../Sources/ProcessorExpert.c **** 	DMA_DSR_BCR2 = ADC_CHANNELS_COUNT + 1;
- 203              		.loc 1 136 0
- 204 00d6 814A     		ldr	r2, .L28+44
- 205 00d8 9423     		mov	r3, #148
- 206 00da 5B00     		lsl	r3, r3, #1
- 207 00dc 0421     		mov	r1, #4
- 208 00de D150     		str	r1, [r2, r3]
- 137:../Sources/ProcessorExpert.c ****     // start first DMA1 transfer (selects mux, then fires channel 2 to select channel which starts 
- 138:../Sources/ProcessorExpert.c ****     DMA_DCR1 |= DMA_DCR_START_MASK;
- 209              		.loc 1 138 0
- 210 00e0 7E4A     		ldr	r2, .L28+44
- 211 00e2 7E49     		ldr	r1, .L28+44
- 212 00e4 8E23     		mov	r3, #142
- 213 00e6 5B00     		lsl	r3, r3, #1
- 214 00e8 CB58     		ldr	r3, [r1, r3]
- 215 00ea 8021     		mov	r1, #128
- 216 00ec 4902     		lsl	r1, r1, #9
- 217 00ee 1943     		orr	r1, r3
- 218 00f0 8E23     		mov	r3, #142
- 219 00f2 5B00     		lsl	r3, r3, #1
- 220 00f4 D150     		str	r1, [r2, r3]
- 139:../Sources/ProcessorExpert.c ****     // wait till it's all measured
- 140:../Sources/ProcessorExpert.c **** 	while (!Measured) {}	  
- 221              		.loc 1 140 0
- 222 00f6 C046     		mov	r8, r8
- 223              	.L4:
- 224              		.loc 1 140 0 is_stmt 0
- 225 00f8 704B     		ldr	r3, .L28+12
- 226 00fa 1B78     		ldrb	r3, [r3]
- 227 00fc 002B     		cmp	r3, #0
- 228 00fe FBD0     		beq	.L4
- 141:../Sources/ProcessorExpert.c **** 	// print all measured values to console
- 142:../Sources/ProcessorExpert.c **** 	
- 143:../Sources/ProcessorExpert.c **** 	/*
- 144:../Sources/ProcessorExpert.c **** 	 * The following takes temp
- 145:../Sources/ProcessorExpert.c **** 	 */
- 146:../Sources/ProcessorExpert.c **** 	temp = MeasuredValues[2]/64.06926407;
- 229              		.loc 1 146 0 is_stmt 1
- 230 0100 774B     		ldr	r3, .L28+48
- 231 0102 9B88     		ldrh	r3, [r3, #4]
- 232 0104 181C     		mov	r0, r3
- 233 0106 FFF7FEFF 		bl	__aeabi_i2d
- 234 010a 031C     		mov	r3, r0
- 235 010c 0C1C     		mov	r4, r1
- 236 010e 181C     		mov	r0, r3
- 237 0110 211C     		mov	r1, r4
- 238 0112 684B     		ldr	r3, .L28+4
- 239 0114 664A     		ldr	r2, .L28
- 240 0116 FFF7FEFF 		bl	__aeabi_ddiv
- 241 011a 031C     		mov	r3, r0
- 242 011c 0C1C     		mov	r4, r1
- 243 011e 181C     		mov	r0, r3
- 244 0120 211C     		mov	r1, r4
- 245 0122 FFF7FEFF 		bl	__aeabi_d2f
- 246 0126 021C     		add	r2, r0, #0
- 247 0128 704B     		ldr	r3, .L28+60
- 248 012a 1A60     		str	r2, [r3]
- 147:../Sources/ProcessorExpert.c **** 	if (temp >= 86) tooHotTherm = TRUE;
- 249              		.loc 1 147 0
- 250 012c 6F4B     		ldr	r3, .L28+60
- 251 012e 1B68     		ldr	r3, [r3]
- 252 0130 181C     		add	r0, r3, #0
- 253 0132 6F49     		ldr	r1, .L28+64
- 254 0134 FFF7FEFF 		bl	__aeabi_fcmpge
- 255 0138 031C     		mov	r3, r0
- 256 013a 002B     		cmp	r3, #0
- 257 013c 03D0     		beq	.L27
- 258              	.L26:
- 259              		.loc 1 147 0 is_stmt 0
- 260 013e 6D4B     		ldr	r3, .L28+68
- 261 0140 0122     		mov	r2, #1
- 262 0142 1A70     		strb	r2, [r3]
- 263 0144 02E0     		b	.L7
- 264              	.L27:
- 148:../Sources/ProcessorExpert.c **** 	else tooHotTherm = FALSE;
- 265              		.loc 1 148 0 is_stmt 1
- 266 0146 6B4B     		ldr	r3, .L28+68
- 267 0148 0022     		mov	r2, #0
- 268 014a 1A70     		strb	r2, [r3]
- 269              	.L7:
- 149:../Sources/ProcessorExpert.c **** 	printf ("%f",temp);
- 270              		.loc 1 149 0
- 271 014c 674B     		ldr	r3, .L28+60
- 272 014e 1B68     		ldr	r3, [r3]
- 273 0150 181C     		add	r0, r3, #0
- 274 0152 FFF7FEFF 		bl	__aeabi_f2d
- 275 0156 031C     		mov	r3, r0
- 276 0158 0C1C     		mov	r4, r1
- 277 015a 674A     		ldr	r2, .L28+72
- 278 015c 101C     		mov	r0, r2
- 279 015e 1A1C     		mov	r2, r3
- 280 0160 231C     		mov	r3, r4
- 281 0162 FFF7FEFF 		bl	printf
- 150:../Sources/ProcessorExpert.c **** 	
- 151:../Sources/ProcessorExpert.c **** 	/*
- 152:../Sources/ProcessorExpert.c **** 	 * The following senses motion in car
- 153:../Sources/ProcessorExpert.c **** 	 */
- 154:../Sources/ProcessorExpert.c **** 	if (motion1 || motion2) childInCar = True;
- 282              		.loc 1 154 0
- 283 0166 594B     		ldr	r3, .L28+28
- 284 0168 1B78     		ldrb	r3, [r3]
- 285 016a 002B     		cmp	r3, #0
- 286 016c 03D1     		bne	.L8
- 287              		.loc 1 154 0 is_stmt 0
- 288 016e 584B     		ldr	r3, .L28+32
- 289 0170 1B78     		ldrb	r3, [r3]
- 290 0172 002B     		cmp	r3, #0
- 291 0174 03D0     		beq	.L9
- 292              	.L8:
- 293              		.loc 1 154 0
- 294 0176 614B     		ldr	r3, .L28+76
- 295 0178 0122     		mov	r2, #1
- 296 017a 1A70     		strb	r2, [r3]
- 297 017c 02E0     		b	.L10
- 298              	.L9:
- 155:../Sources/ProcessorExpert.c **** 	else childInCar = False;
- 299              		.loc 1 155 0 is_stmt 1
- 300 017e 5F4B     		ldr	r3, .L28+76
- 301 0180 0022     		mov	r2, #0
+  84:../Sources/ProcessorExpert.c **** /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
+  85:../Sources/ProcessorExpert.c **** int main(void)
+  86:../Sources/ProcessorExpert.c **** /*lint -restore Enable MISRA rule (6.3) checking. */
+  87:../Sources/ProcessorExpert.c **** {
+  73              		.loc 1 87 0
+  74              		.cfi_startproc
+  75 0000 90B5     		push	{r4, r7, lr}
+  76              	.LCFI0:
+  77              		.cfi_def_cfa_offset 12
+  78              		.cfi_offset 4, -12
+  79              		.cfi_offset 7, -8
+  80              		.cfi_offset 14, -4
+  81 0002 83B0     		sub	sp, sp, #12
+  82              	.LCFI1:
+  83              		.cfi_def_cfa_offset 24
+  84 0004 00AF     		add	r7, sp, #0
+  85              	.LCFI2:
+  86              		.cfi_def_cfa_register 7
+  88:../Sources/ProcessorExpert.c ****   /* Write your local variable definition here */
+  89:../Sources/ProcessorExpert.c **** 
+  90:../Sources/ProcessorExpert.c ****   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
+  91:../Sources/ProcessorExpert.c ****   PE_low_level_init();
+  87              		.loc 1 91 0
+  88 0006 FFF7FEFF 		bl	PE_low_level_init
+  92:../Sources/ProcessorExpert.c ****   /*** End of Processor Expert internal initialization.                    ***/
+  93:../Sources/ProcessorExpert.c ****   /* Write your local variable definition here */
+  94:../Sources/ProcessorExpert.c ****   byte i;
+  95:../Sources/ProcessorExpert.c ****   /*** Processor Expert internal initialisation. DON'T REMOVE THIS CODE!!! ***/
+  96:../Sources/ProcessorExpert.c ****   PE_low_level_init();
+  89              		.loc 1 96 0
+  90 000a FFF7FEFF 		bl	PE_low_level_init
+  97:../Sources/ProcessorExpert.c ****   /*** End of Processor Expert internal initialisation.                    ***/
+  98:../Sources/ProcessorExpert.c **** 
+  99:../Sources/ProcessorExpert.c ****   printf ("Hello!\r\n");
+  91              		.loc 1 99 0
+  92 000e A64B     		ldr	r3, .L29+8
+  93 0010 181C     		mov	r0, r3
+  94 0012 FFF7FEFF 		bl	puts
+ 100:../Sources/ProcessorExpert.c **** 
+ 101:../Sources/ProcessorExpert.c ****   // reset flag 
+ 102:../Sources/ProcessorExpert.c ****   Measured = FALSE;
+  95              		.loc 1 102 0
+  96 0016 A54B     		ldr	r3, .L29+12
+  97 0018 0022     		mov	r2, #0
+  98 001a 1A70     		strb	r2, [r3]
+ 103:../Sources/ProcessorExpert.c ****   C17_SetDir(False);
+  99              		.loc 1 103 0
+ 100 001c A44B     		ldr	r3, .L29+16
+ 101 001e 9B69     		ldr	r3, [r3, #24]
+ 102 0020 181C     		mov	r0, r3
+ 103 0022 0021     		mov	r1, #0
+ 104 0024 FFF7FEFF 		bl	BitIoLdd6_SetDir
+ 104:../Sources/ProcessorExpert.c ****   C16_SetDir(False);
+ 105              		.loc 1 104 0
+ 106 0028 A14B     		ldr	r3, .L29+16
+ 107 002a DB69     		ldr	r3, [r3, #28]
+ 108 002c 181C     		mov	r0, r3
+ 109 002e 0021     		mov	r1, #0
+ 110 0030 FFF7FEFF 		bl	BitIoLdd5_SetDir
+ 105:../Sources/ProcessorExpert.c ****   // Initialise ADC now
+ 106:../Sources/ProcessorExpert.c ****   ADC1_Init();
+ 111              		.loc 1 106 0
+ 112 0034 FFF7FEFF 		bl	ADC1_Init
+ 107:../Sources/ProcessorExpert.c ****   // Initialise DMA now  
+ 108:../Sources/ProcessorExpert.c ****   DMA1_Init();
+ 113              		.loc 1 108 0
+ 114 0038 FFF7FEFF 		bl	DMA1_Init
+ 115              	.L26:
+ 109:../Sources/ProcessorExpert.c ****   // loop forever  
+ 110:../Sources/ProcessorExpert.c ****   while (TRUE) {
+ 111:../Sources/ProcessorExpert.c ****     tooHotTeensy = C17_GetVal();
+ 116              		.loc 1 111 0
+ 117 003c 9C4B     		ldr	r3, .L29+16
+ 118 003e 9B69     		ldr	r3, [r3, #24]
+ 119 0040 181C     		mov	r0, r3
+ 120 0042 FFF7FEFF 		bl	BitIoLdd6_GetVal
+ 121 0046 031C     		mov	r3, r0
+ 122 0048 1A1C     		mov	r2, r3
+ 123 004a 9A4B     		ldr	r3, .L29+20
+ 124 004c 1A70     		strb	r2, [r3]
+ 112:../Sources/ProcessorExpert.c ****     comm = C16_GetVal();
+ 125              		.loc 1 112 0
+ 126 004e 984B     		ldr	r3, .L29+16
+ 127 0050 DB69     		ldr	r3, [r3, #28]
+ 128 0052 181C     		mov	r0, r3
+ 129 0054 FFF7FEFF 		bl	BitIoLdd5_GetVal
+ 130 0058 031C     		mov	r3, r0
+ 131 005a 1A1C     		mov	r2, r3
+ 132 005c 964B     		ldr	r3, .L29+24
+ 133 005e 1A70     		strb	r2, [r3]
+ 113:../Sources/ProcessorExpert.c ****     motion1 = E2_GetVal();			// PIR Motion Detector
+ 134              		.loc 1 113 0
+ 135 0060 934B     		ldr	r3, .L29+16
+ 136 0062 5B6A     		ldr	r3, [r3, #36]
+ 137 0064 181C     		mov	r0, r3
+ 138 0066 FFF7FEFF 		bl	BitIoLdd8_GetVal
+ 139 006a 031C     		mov	r3, r0
+ 140 006c 1A1C     		mov	r2, r3
+ 141 006e 934B     		ldr	r3, .L29+28
+ 142 0070 1A70     		strb	r2, [r3]
+ 114:../Sources/ProcessorExpert.c ****     if(comm)
+ 143              		.loc 1 114 0
+ 144 0072 914B     		ldr	r3, .L29+24
+ 145 0074 1B78     		ldrb	r3, [r3]
+ 146 0076 002B     		cmp	r3, #0
+ 147 0078 04D0     		beq	.L2
+ 115:../Sources/ProcessorExpert.c ****     {
+ 116:../Sources/ProcessorExpert.c ****     	printf("communicating\n");
+ 148              		.loc 1 116 0
+ 149 007a 914B     		ldr	r3, .L29+32
+ 150 007c 181C     		mov	r0, r3
+ 151 007e FFF7FEFF 		bl	puts
+ 152 0082 03E0     		b	.L3
+ 153              	.L2:
+ 117:../Sources/ProcessorExpert.c ****     } else
+ 118:../Sources/ProcessorExpert.c ****     {
+ 119:../Sources/ProcessorExpert.c ****     	printf("not communicating\n");
+ 154              		.loc 1 119 0
+ 155 0084 8F4B     		ldr	r3, .L29+36
+ 156 0086 181C     		mov	r0, r3
+ 157 0088 FFF7FEFF 		bl	puts
+ 158              	.L3:
+ 120:../Sources/ProcessorExpert.c ****     }
+ 121:../Sources/ProcessorExpert.c **** 	// clear flag  
+ 122:../Sources/ProcessorExpert.c **** 	Measured = FALSE;	
+ 159              		.loc 1 122 0
+ 160 008c 874B     		ldr	r3, .L29+12
+ 161 008e 0022     		mov	r2, #0
+ 162 0090 1A70     		strb	r2, [r3]
+ 123:../Sources/ProcessorExpert.c **** 	// reset DMA0 destination pointer to beginning of the buffer 
+ 124:../Sources/ProcessorExpert.c **** 	DMA_DAR0 = (uint32_t) &MeasuredValues;
+ 163              		.loc 1 124 0
+ 164 0092 8D4A     		ldr	r2, .L29+40
+ 165 0094 8D49     		ldr	r1, .L29+44
+ 166 0096 8223     		mov	r3, #130
+ 167 0098 5B00     		lsl	r3, r3, #1
+ 168 009a D150     		str	r1, [r2, r3]
+ 125:../Sources/ProcessorExpert.c **** 	// reset DMA1 source pointer (MUX switching writes)
+ 126:../Sources/ProcessorExpert.c **** 	DMA_SAR1 = (uint32_t) &ChannelsCfg2;
+ 169              		.loc 1 126 0
+ 170 009c 8A4A     		ldr	r2, .L29+40
+ 171 009e 8C49     		ldr	r1, .L29+48
+ 172 00a0 8823     		mov	r3, #136
+ 173 00a2 5B00     		lsl	r3, r3, #1
+ 174 00a4 D150     		str	r1, [r2, r3]
+ 127:../Sources/ProcessorExpert.c **** 	// reset DMA2 source pointer (channel switching and conversion start writes)
+ 128:../Sources/ProcessorExpert.c **** 	DMA_SAR2 = (uint32_t) &ChannelsCfg;
+ 175              		.loc 1 128 0
+ 176 00a6 884A     		ldr	r2, .L29+40
+ 177 00a8 8A49     		ldr	r1, .L29+52
+ 178 00aa 9023     		mov	r3, #144
+ 179 00ac 5B00     		lsl	r3, r3, #1
+ 180 00ae D150     		str	r1, [r2, r3]
+ 129:../Sources/ProcessorExpert.c **** 	// number of total bytes to be transfered from the ADC result register A 
+ 130:../Sources/ProcessorExpert.c **** 	DMA_DSR_BCR0 = ADC_CHANNELS_COUNT * 2;
+ 181              		.loc 1 130 0
+ 182 00b0 854A     		ldr	r2, .L29+40
+ 183 00b2 8423     		mov	r3, #132
+ 184 00b4 5B00     		lsl	r3, r3, #1
+ 185 00b6 0621     		mov	r1, #6
+ 186 00b8 D150     		str	r1, [r2, r3]
+ 131:../Sources/ProcessorExpert.c **** 	// set number of total bytes to be transfered to the ADC0_CFG2 
+ 132:../Sources/ProcessorExpert.c **** 	DMA_DSR_BCR1 = ADC_CHANNELS_COUNT + 1;
+ 187              		.loc 1 132 0
+ 188 00ba 834A     		ldr	r2, .L29+40
+ 189 00bc 8C23     		mov	r3, #140
+ 190 00be 5B00     		lsl	r3, r3, #1
+ 191 00c0 0421     		mov	r1, #4
+ 192 00c2 D150     		str	r1, [r2, r3]
+ 133:../Sources/ProcessorExpert.c **** 	// set number of total bytes to be transfered to the ADC0_SC1A.  
+ 134:../Sources/ProcessorExpert.c **** 	DMA_DSR_BCR2 = ADC_CHANNELS_COUNT + 1;
+ 193              		.loc 1 134 0
+ 194 00c4 804A     		ldr	r2, .L29+40
+ 195 00c6 9423     		mov	r3, #148
+ 196 00c8 5B00     		lsl	r3, r3, #1
+ 197 00ca 0421     		mov	r1, #4
+ 198 00cc D150     		str	r1, [r2, r3]
+ 135:../Sources/ProcessorExpert.c ****     // start first DMA1 transfer (selects mux, then fires channel 2 to select channel which starts 
+ 136:../Sources/ProcessorExpert.c ****     DMA_DCR1 |= DMA_DCR_START_MASK;
+ 199              		.loc 1 136 0
+ 200 00ce 7E4A     		ldr	r2, .L29+40
+ 201 00d0 7D49     		ldr	r1, .L29+40
+ 202 00d2 8E23     		mov	r3, #142
+ 203 00d4 5B00     		lsl	r3, r3, #1
+ 204 00d6 CB58     		ldr	r3, [r1, r3]
+ 205 00d8 8021     		mov	r1, #128
+ 206 00da 4902     		lsl	r1, r1, #9
+ 207 00dc 1943     		orr	r1, r3
+ 208 00de 8E23     		mov	r3, #142
+ 209 00e0 5B00     		lsl	r3, r3, #1
+ 210 00e2 D150     		str	r1, [r2, r3]
+ 137:../Sources/ProcessorExpert.c ****     // wait till it's all measured
+ 138:../Sources/ProcessorExpert.c **** 	while (!Measured) {}	  
+ 211              		.loc 1 138 0
+ 212 00e4 C046     		mov	r8, r8
+ 213              	.L4:
+ 214              		.loc 1 138 0 is_stmt 0
+ 215 00e6 714B     		ldr	r3, .L29+12
+ 216 00e8 1B78     		ldrb	r3, [r3]
+ 217 00ea 002B     		cmp	r3, #0
+ 218 00ec FBD0     		beq	.L4
+ 139:../Sources/ProcessorExpert.c **** 	// print all measured values to console
+ 140:../Sources/ProcessorExpert.c **** 	
+ 141:../Sources/ProcessorExpert.c **** 	/*
+ 142:../Sources/ProcessorExpert.c **** 	 * The following takes temp
+ 143:../Sources/ProcessorExpert.c **** 	 */
+ 144:../Sources/ProcessorExpert.c **** 	temp = MeasuredValues[2]/64.06926407;
+ 219              		.loc 1 144 0 is_stmt 1
+ 220 00ee 774B     		ldr	r3, .L29+44
+ 221 00f0 9B88     		ldrh	r3, [r3, #4]
+ 222 00f2 181C     		mov	r0, r3
+ 223 00f4 FFF7FEFF 		bl	__aeabi_i2d
+ 224 00f8 031C     		mov	r3, r0
+ 225 00fa 0C1C     		mov	r4, r1
+ 226 00fc 181C     		mov	r0, r3
+ 227 00fe 211C     		mov	r1, r4
+ 228 0100 684B     		ldr	r3, .L29+4
+ 229 0102 674A     		ldr	r2, .L29
+ 230 0104 FFF7FEFF 		bl	__aeabi_ddiv
+ 231 0108 031C     		mov	r3, r0
+ 232 010a 0C1C     		mov	r4, r1
+ 233 010c 181C     		mov	r0, r3
+ 234 010e 211C     		mov	r1, r4
+ 235 0110 FFF7FEFF 		bl	__aeabi_d2f
+ 236 0114 021C     		add	r2, r0, #0
+ 237 0116 704B     		ldr	r3, .L29+56
+ 238 0118 1A60     		str	r2, [r3]
+ 145:../Sources/ProcessorExpert.c **** 	if (temp >= 86) tooHotTherm = TRUE;
+ 239              		.loc 1 145 0
+ 240 011a 6F4B     		ldr	r3, .L29+56
+ 241 011c 1B68     		ldr	r3, [r3]
+ 242 011e 181C     		add	r0, r3, #0
+ 243 0120 6E49     		ldr	r1, .L29+60
+ 244 0122 FFF7FEFF 		bl	__aeabi_fcmpge
+ 245 0126 031C     		mov	r3, r0
+ 246 0128 002B     		cmp	r3, #0
+ 247 012a 03D0     		beq	.L28
+ 248              	.L27:
+ 249              		.loc 1 145 0 is_stmt 0
+ 250 012c 6C4B     		ldr	r3, .L29+64
+ 251 012e 0122     		mov	r2, #1
+ 252 0130 1A70     		strb	r2, [r3]
+ 253 0132 02E0     		b	.L7
+ 254              	.L28:
+ 146:../Sources/ProcessorExpert.c **** 	else tooHotTherm = FALSE;
+ 255              		.loc 1 146 0 is_stmt 1
+ 256 0134 6A4B     		ldr	r3, .L29+64
+ 257 0136 0022     		mov	r2, #0
+ 258 0138 1A70     		strb	r2, [r3]
+ 259              	.L7:
+ 147:../Sources/ProcessorExpert.c **** 	printf ("%f",temp);
+ 260              		.loc 1 147 0
+ 261 013a 674B     		ldr	r3, .L29+56
+ 262 013c 1B68     		ldr	r3, [r3]
+ 263 013e 181C     		add	r0, r3, #0
+ 264 0140 FFF7FEFF 		bl	__aeabi_f2d
+ 265 0144 031C     		mov	r3, r0
+ 266 0146 0C1C     		mov	r4, r1
+ 267 0148 664A     		ldr	r2, .L29+68
+ 268 014a 101C     		mov	r0, r2
+ 269 014c 1A1C     		mov	r2, r3
+ 270 014e 231C     		mov	r3, r4
+ 271 0150 FFF7FEFF 		bl	printf
+ 148:../Sources/ProcessorExpert.c **** 	
+ 149:../Sources/ProcessorExpert.c **** 	/*
+ 150:../Sources/ProcessorExpert.c **** 	 * The following senses motion in car
+ 151:../Sources/ProcessorExpert.c **** 	 */
+ 152:../Sources/ProcessorExpert.c **** 	if (motion1) childInCar = True;
+ 272              		.loc 1 152 0
+ 273 0154 594B     		ldr	r3, .L29+28
+ 274 0156 1B78     		ldrb	r3, [r3]
+ 275 0158 002B     		cmp	r3, #0
+ 276 015a 03D0     		beq	.L8
+ 277              		.loc 1 152 0 is_stmt 0
+ 278 015c 624B     		ldr	r3, .L29+72
+ 279 015e 0122     		mov	r2, #1
+ 280 0160 1A70     		strb	r2, [r3]
+ 281 0162 02E0     		b	.L9
+ 282              	.L8:
+ 153:../Sources/ProcessorExpert.c **** 	else childInCar = False;
+ 283              		.loc 1 153 0 is_stmt 1
+ 284 0164 604B     		ldr	r3, .L29+72
+ 285 0166 0022     		mov	r2, #0
+ 286 0168 1A70     		strb	r2, [r3]
+ 287              	.L9:
+ 154:../Sources/ProcessorExpert.c **** 	
+ 155:../Sources/ProcessorExpert.c **** 	/*
+ 156:../Sources/ProcessorExpert.c **** 	 * This senses if the child is in the seat
+ 157:../Sources/ProcessorExpert.c **** 	 */
+ 158:../Sources/ProcessorExpert.c **** 	if (MeasuredValues[0]>30000 && MeasuredValues[1]<30000)childInSeat = True;
+ 288              		.loc 1 158 0
+ 289 016a 584B     		ldr	r3, .L29+44
+ 290 016c 1A88     		ldrh	r2, [r3]
+ 291 016e 5F4B     		ldr	r3, .L29+76
+ 292 0170 9A42     		cmp	r2, r3
+ 293 0172 08D9     		bls	.L10
+ 294              		.loc 1 158 0 is_stmt 0
+ 295 0174 554B     		ldr	r3, .L29+44
+ 296 0176 5A88     		ldrh	r2, [r3, #2]
+ 297 0178 5D4B     		ldr	r3, .L29+80
+ 298 017a 9A42     		cmp	r2, r3
+ 299 017c 03D8     		bhi	.L10
+ 300 017e 5D4B     		ldr	r3, .L29+84
+ 301 0180 0122     		mov	r2, #1
  302 0182 1A70     		strb	r2, [r3]
- 303              	.L10:
- 156:../Sources/ProcessorExpert.c **** 	
- 157:../Sources/ProcessorExpert.c **** 	/*
- 158:../Sources/ProcessorExpert.c **** 	 * This senses if the child is in the seat
- 159:../Sources/ProcessorExpert.c **** 	 */
- 160:../Sources/ProcessorExpert.c **** 	if (MeasuredValues[0]>30000 && MeasuredValues[1]<30000)childInSeat = True;
- 304              		.loc 1 160 0
- 305 0184 564B     		ldr	r3, .L28+48
- 306 0186 1A88     		ldrh	r2, [r3]
- 307 0188 5D4B     		ldr	r3, .L28+80
- 308 018a 9A42     		cmp	r2, r3
- 309 018c 08D9     		bls	.L11
- 310              		.loc 1 160 0 is_stmt 0
- 311 018e 544B     		ldr	r3, .L28+48
- 312 0190 5A88     		ldrh	r2, [r3, #2]
- 313 0192 5C4B     		ldr	r3, .L28+84
- 314 0194 9A42     		cmp	r2, r3
- 315 0196 03D8     		bhi	.L11
- 316 0198 5B4B     		ldr	r3, .L28+88
- 317 019a 0122     		mov	r2, #1
- 318 019c 1A70     		strb	r2, [r3]
- 319 019e 02E0     		b	.L12
- 320              	.L11:
- 161:../Sources/ProcessorExpert.c **** 	else childInSeat = False;
- 321              		.loc 1 161 0 is_stmt 1
- 322 01a0 594B     		ldr	r3, .L28+88
- 323 01a2 0022     		mov	r2, #0
- 324 01a4 1A70     		strb	r2, [r3]
- 325              	.L12:
- 162:../Sources/ProcessorExpert.c **** 	
- 163:../Sources/ProcessorExpert.c **** 	/*
- 164:../Sources/ProcessorExpert.c **** 	 * if child is in seat tell transmitter
- 165:../Sources/ProcessorExpert.c **** 	 */
- 166:../Sources/ProcessorExpert.c **** 	if (childInSeat == True) A12_SetVal();	// A12 is to arduino sender HIGH
- 326              		.loc 1 166 0
- 327 01a6 584B     		ldr	r3, .L28+88
- 328 01a8 1B78     		ldrb	r3, [r3]
- 329 01aa 012B     		cmp	r3, #1
- 330 01ac 05D1     		bne	.L13
- 331              		.loc 1 166 0 is_stmt 0
- 332 01ae 444B     		ldr	r3, .L28+16
- 333 01b0 9B68     		ldr	r3, [r3, #8]
- 334 01b2 181C     		mov	r0, r3
- 335 01b4 FFF7FEFF 		bl	BitIoLdd1_SetVal
- 336 01b8 04E0     		b	.L14
- 337              	.L13:
- 167:../Sources/ProcessorExpert.c **** 	else A12_ClrVal();						// A12 is to arduino sender LOW
- 338              		.loc 1 167 0 is_stmt 1
- 339 01ba 414B     		ldr	r3, .L28+16
- 340 01bc 9B68     		ldr	r3, [r3, #8]
- 341 01be 181C     		mov	r0, r3
- 342 01c0 FFF7FEFF 		bl	BitIoLdd1_ClrVal
- 343              	.L14:
- 168:../Sources/ProcessorExpert.c **** 	
- 169:../Sources/ProcessorExpert.c **** 	/*
- 170:../Sources/ProcessorExpert.c **** 	 * if the kid is in the seat and not buckeled up
- 171:../Sources/ProcessorExpert.c **** 	 * set off buzzer
- 172:../Sources/ProcessorExpert.c **** 	 */
- 173:../Sources/ProcessorExpert.c **** 	if (MeasuredValues[0]>30000 && MeasuredValues[1]>30000)
- 344              		.loc 1 173 0
- 345 01c4 464B     		ldr	r3, .L28+48
- 346 01c6 1A88     		ldrh	r2, [r3]
- 347 01c8 4D4B     		ldr	r3, .L28+80
- 348 01ca 9A42     		cmp	r2, r3
- 349 01cc 0AD9     		bls	.L15
- 350              		.loc 1 173 0 is_stmt 0
- 351 01ce 444B     		ldr	r3, .L28+48
- 352 01d0 5A88     		ldrh	r2, [r3, #2]
- 353 01d2 4B4B     		ldr	r3, .L28+80
- 354 01d4 9A42     		cmp	r2, r3
- 355 01d6 05D9     		bls	.L15
- 174:../Sources/ProcessorExpert.c **** 	{
- 175:../Sources/ProcessorExpert.c **** 		C2_SetVal();
- 356              		.loc 1 175 0 is_stmt 1
- 357 01d8 394B     		ldr	r3, .L28+16
- 358 01da 1B6A     		ldr	r3, [r3, #32]
- 359 01dc 181C     		mov	r0, r3
- 360 01de FFF7FEFF 		bl	BitIoLdd7_SetVal
- 361 01e2 04E0     		b	.L16
- 362              	.L15:
- 176:../Sources/ProcessorExpert.c **** 	} else
- 177:../Sources/ProcessorExpert.c **** 	{
- 178:../Sources/ProcessorExpert.c **** 		C2_ClrVal();
- 363              		.loc 1 178 0
- 364 01e4 364B     		ldr	r3, .L28+16
- 365 01e6 1B6A     		ldr	r3, [r3, #32]
- 366 01e8 181C     		mov	r0, r3
- 367 01ea FFF7FEFF 		bl	BitIoLdd7_ClrVal
- 368              	.L16:
- 179:../Sources/ProcessorExpert.c **** 	}
- 180:../Sources/ProcessorExpert.c **** 	
- 181:../Sources/ProcessorExpert.c **** 	/*
- 182:../Sources/ProcessorExpert.c **** 	 * if the radio's can't communicate and the child is in the seat then
- 183:../Sources/ProcessorExpert.c **** 	 * turn on the lights
- 184:../Sources/ProcessorExpert.c **** 	 */
- 185:../Sources/ProcessorExpert.c **** 	if(!comm && childInSeat)
- 369              		.loc 1 185 0
- 370 01ee 364B     		ldr	r3, .L28+24
- 371 01f0 1B78     		ldrb	r3, [r3]
- 372 01f2 002B     		cmp	r3, #0
- 373 01f4 09D1     		bne	.L17
- 374              		.loc 1 185 0 is_stmt 0
- 375 01f6 444B     		ldr	r3, .L28+88
- 376 01f8 1B78     		ldrb	r3, [r3]
- 377 01fa 002B     		cmp	r3, #0
- 378 01fc 05D0     		beq	.L17
- 186:../Sources/ProcessorExpert.c **** 	{
- 187:../Sources/ProcessorExpert.c **** 		B9_SetVal(); // turn on lights
- 379              		.loc 1 187 0 is_stmt 1
- 380 01fe 304B     		ldr	r3, .L28+16
- 381 0200 5B69     		ldr	r3, [r3, #20]
- 382 0202 181C     		mov	r0, r3
- 383 0204 FFF7FEFF 		bl	BitIoLdd4_SetVal
- 384 0208 04E0     		b	.L18
- 385              	.L17:
- 188:../Sources/ProcessorExpert.c **** 	} else
- 189:../Sources/ProcessorExpert.c **** 	{
- 190:../Sources/ProcessorExpert.c **** 		B9_ClrVal(); // turn off lights
- 386              		.loc 1 190 0
- 387 020a 2D4B     		ldr	r3, .L28+16
- 388 020c 5B69     		ldr	r3, [r3, #20]
- 389 020e 181C     		mov	r0, r3
- 390 0210 FFF7FEFF 		bl	BitIoLdd4_ClrVal
- 391              	.L18:
- 191:../Sources/ProcessorExpert.c **** 	}
- 192:../Sources/ProcessorExpert.c **** 	
- 193:../Sources/ProcessorExpert.c **** 	/*
- 194:../Sources/ProcessorExpert.c **** 	 * if either of the temp sensors sense it's too hot
- 195:../Sources/ProcessorExpert.c **** 	 * and the child is in the seat then turn on the ac
- 196:../Sources/ProcessorExpert.c **** 	 * system
- 197:../Sources/ProcessorExpert.c **** 	 */
- 198:../Sources/ProcessorExpert.c **** 	if ((tooHotTeensy || tooHotTherm) && childInSeat)
- 392              		.loc 1 198 0
- 393 0214 2B4B     		ldr	r3, .L28+20
- 394 0216 1B78     		ldrb	r3, [r3]
- 395 0218 002B     		cmp	r3, #0
- 396 021a 03D1     		bne	.L19
- 397              		.loc 1 198 0 is_stmt 0
- 398 021c 354B     		ldr	r3, .L28+68
- 399 021e 1B78     		ldrb	r3, [r3]
- 400 0220 002B     		cmp	r3, #0
- 401 0222 0ED0     		beq	.L20
- 402              	.L19:
- 403              		.loc 1 198 0
- 404 0224 384B     		ldr	r3, .L28+88
- 405 0226 1B78     		ldrb	r3, [r3]
- 406 0228 002B     		cmp	r3, #0
- 407 022a 0AD0     		beq	.L20
- 199:../Sources/ProcessorExpert.c **** 	{
- 200:../Sources/ProcessorExpert.c **** 		A13_SetVal(); 	// turn on AC
- 408              		.loc 1 200 0 is_stmt 1
- 409 022c 244B     		ldr	r3, .L28+16
- 410 022e DB68     		ldr	r3, [r3, #12]
+ 303 0184 02E0     		b	.L11
+ 304              	.L10:
+ 159:../Sources/ProcessorExpert.c **** 	else childInSeat = False;
+ 305              		.loc 1 159 0 is_stmt 1
+ 306 0186 5B4B     		ldr	r3, .L29+84
+ 307 0188 0022     		mov	r2, #0
+ 308 018a 1A70     		strb	r2, [r3]
+ 309              	.L11:
+ 160:../Sources/ProcessorExpert.c **** 	
+ 161:../Sources/ProcessorExpert.c **** 	/*
+ 162:../Sources/ProcessorExpert.c **** 	 * if child is in seat tell transmitter
+ 163:../Sources/ProcessorExpert.c **** 	 */
+ 164:../Sources/ProcessorExpert.c **** 	if (childInSeat || childInCar) A12_SetVal();	// A12 is to arduino sender HIGH
+ 310              		.loc 1 164 0
+ 311 018c 594B     		ldr	r3, .L29+84
+ 312 018e 1B78     		ldrb	r3, [r3]
+ 313 0190 002B     		cmp	r3, #0
+ 314 0192 03D1     		bne	.L12
+ 315              		.loc 1 164 0 is_stmt 0
+ 316 0194 544B     		ldr	r3, .L29+72
+ 317 0196 1B78     		ldrb	r3, [r3]
+ 318 0198 002B     		cmp	r3, #0
+ 319 019a 05D0     		beq	.L13
+ 320              	.L12:
+ 321              		.loc 1 164 0
+ 322 019c 444B     		ldr	r3, .L29+16
+ 323 019e 9B68     		ldr	r3, [r3, #8]
+ 324 01a0 181C     		mov	r0, r3
+ 325 01a2 FFF7FEFF 		bl	BitIoLdd1_SetVal
+ 326 01a6 04E0     		b	.L14
+ 327              	.L13:
+ 165:../Sources/ProcessorExpert.c **** 	else A12_ClrVal();						// A12 is to arduino sender LOW
+ 328              		.loc 1 165 0 is_stmt 1
+ 329 01a8 414B     		ldr	r3, .L29+16
+ 330 01aa 9B68     		ldr	r3, [r3, #8]
+ 331 01ac 181C     		mov	r0, r3
+ 332 01ae FFF7FEFF 		bl	BitIoLdd1_ClrVal
+ 333              	.L14:
+ 166:../Sources/ProcessorExpert.c **** 	
+ 167:../Sources/ProcessorExpert.c **** 	/*
+ 168:../Sources/ProcessorExpert.c **** 	 * if the kid is in the seat and not buckeled up
+ 169:../Sources/ProcessorExpert.c **** 	 * set off buzzer
+ 170:../Sources/ProcessorExpert.c **** 	 */
+ 171:../Sources/ProcessorExpert.c **** 	if (MeasuredValues[0]>30000 && MeasuredValues[1]>30000)
+ 334              		.loc 1 171 0
+ 335 01b2 464B     		ldr	r3, .L29+44
+ 336 01b4 1A88     		ldrh	r2, [r3]
+ 337 01b6 4D4B     		ldr	r3, .L29+76
+ 338 01b8 9A42     		cmp	r2, r3
+ 339 01ba 0AD9     		bls	.L15
+ 340              		.loc 1 171 0 is_stmt 0
+ 341 01bc 434B     		ldr	r3, .L29+44
+ 342 01be 5A88     		ldrh	r2, [r3, #2]
+ 343 01c0 4A4B     		ldr	r3, .L29+76
+ 344 01c2 9A42     		cmp	r2, r3
+ 345 01c4 05D9     		bls	.L15
+ 172:../Sources/ProcessorExpert.c **** 	{
+ 173:../Sources/ProcessorExpert.c **** 		C2_SetVal();
+ 346              		.loc 1 173 0 is_stmt 1
+ 347 01c6 3A4B     		ldr	r3, .L29+16
+ 348 01c8 1B6A     		ldr	r3, [r3, #32]
+ 349 01ca 181C     		mov	r0, r3
+ 350 01cc FFF7FEFF 		bl	BitIoLdd7_SetVal
+ 351 01d0 04E0     		b	.L16
+ 352              	.L15:
+ 174:../Sources/ProcessorExpert.c **** 	} else
+ 175:../Sources/ProcessorExpert.c **** 	{
+ 176:../Sources/ProcessorExpert.c **** 		C2_ClrVal();
+ 353              		.loc 1 176 0
+ 354 01d2 374B     		ldr	r3, .L29+16
+ 355 01d4 1B6A     		ldr	r3, [r3, #32]
+ 356 01d6 181C     		mov	r0, r3
+ 357 01d8 FFF7FEFF 		bl	BitIoLdd7_ClrVal
+ 358              	.L16:
+ 177:../Sources/ProcessorExpert.c **** 	}
+ 178:../Sources/ProcessorExpert.c **** 	
+ 179:../Sources/ProcessorExpert.c **** 	/*
+ 180:../Sources/ProcessorExpert.c **** 	 * if the radio's can't communicate and the child is in the seat then
+ 181:../Sources/ProcessorExpert.c **** 	 * turn on the lights
+ 182:../Sources/ProcessorExpert.c **** 	 */
+ 183:../Sources/ProcessorExpert.c **** 	if(!comm && (childInSeat || childInCar))
+ 359              		.loc 1 183 0
+ 360 01dc 364B     		ldr	r3, .L29+24
+ 361 01de 1B78     		ldrb	r3, [r3]
+ 362 01e0 002B     		cmp	r3, #0
+ 363 01e2 0DD1     		bne	.L17
+ 364              		.loc 1 183 0 is_stmt 0
+ 365 01e4 434B     		ldr	r3, .L29+84
+ 366 01e6 1B78     		ldrb	r3, [r3]
+ 367 01e8 002B     		cmp	r3, #0
+ 368 01ea 03D1     		bne	.L18
+ 369 01ec 3E4B     		ldr	r3, .L29+72
+ 370 01ee 1B78     		ldrb	r3, [r3]
+ 371 01f0 002B     		cmp	r3, #0
+ 372 01f2 05D0     		beq	.L17
+ 373              	.L18:
+ 184:../Sources/ProcessorExpert.c **** 	{
+ 185:../Sources/ProcessorExpert.c **** 		B9_SetVal(); // turn on lights
+ 374              		.loc 1 185 0 is_stmt 1
+ 375 01f4 2E4B     		ldr	r3, .L29+16
+ 376 01f6 5B69     		ldr	r3, [r3, #20]
+ 377 01f8 181C     		mov	r0, r3
+ 378 01fa FFF7FEFF 		bl	BitIoLdd4_SetVal
+ 379 01fe 04E0     		b	.L19
+ 380              	.L17:
+ 186:../Sources/ProcessorExpert.c **** 	} else
+ 187:../Sources/ProcessorExpert.c **** 	{
+ 188:../Sources/ProcessorExpert.c **** 		B9_ClrVal(); // turn off lights
+ 381              		.loc 1 188 0
+ 382 0200 2B4B     		ldr	r3, .L29+16
+ 383 0202 5B69     		ldr	r3, [r3, #20]
+ 384 0204 181C     		mov	r0, r3
+ 385 0206 FFF7FEFF 		bl	BitIoLdd4_ClrVal
+ 386              	.L19:
+ 189:../Sources/ProcessorExpert.c **** 	}
+ 190:../Sources/ProcessorExpert.c **** 	
+ 191:../Sources/ProcessorExpert.c **** 	/*
+ 192:../Sources/ProcessorExpert.c **** 	 * if either of the temp sensors sense it's too hot
+ 193:../Sources/ProcessorExpert.c **** 	 * and the child is in the seat then turn on the ac
+ 194:../Sources/ProcessorExpert.c **** 	 * system
+ 195:../Sources/ProcessorExpert.c **** 	 */
+ 196:../Sources/ProcessorExpert.c **** 	if ((tooHotTeensy || tooHotTherm) && childInSeat)
+ 387              		.loc 1 196 0
+ 388 020a 2A4B     		ldr	r3, .L29+20
+ 389 020c 1B78     		ldrb	r3, [r3]
+ 390 020e 002B     		cmp	r3, #0
+ 391 0210 03D1     		bne	.L20
+ 392              		.loc 1 196 0 is_stmt 0
+ 393 0212 334B     		ldr	r3, .L29+64
+ 394 0214 1B78     		ldrb	r3, [r3]
+ 395 0216 002B     		cmp	r3, #0
+ 396 0218 0ED0     		beq	.L21
+ 397              	.L20:
+ 398              		.loc 1 196 0
+ 399 021a 364B     		ldr	r3, .L29+84
+ 400 021c 1B78     		ldrb	r3, [r3]
+ 401 021e 002B     		cmp	r3, #0
+ 402 0220 0AD0     		beq	.L21
+ 197:../Sources/ProcessorExpert.c **** 	{
+ 198:../Sources/ProcessorExpert.c **** 		A13_SetVal(); 	// turn on AC
+ 403              		.loc 1 198 0 is_stmt 1
+ 404 0222 234B     		ldr	r3, .L29+16
+ 405 0224 DB68     		ldr	r3, [r3, #12]
+ 406 0226 181C     		mov	r0, r3
+ 407 0228 FFF7FEFF 		bl	BitIoLdd2_SetVal
+ 199:../Sources/ProcessorExpert.c **** 		E5_SetVal();	// turn on Therm
+ 408              		.loc 1 199 0
+ 409 022c 204B     		ldr	r3, .L29+16
+ 410 022e 1B69     		ldr	r3, [r3, #16]
  411 0230 181C     		mov	r0, r3
- 412 0232 FFF7FEFF 		bl	BitIoLdd2_SetVal
- 201:../Sources/ProcessorExpert.c **** 		E5_SetVal();	// turn on Therm
- 413              		.loc 1 201 0
- 414 0236 224B     		ldr	r3, .L28+16
- 415 0238 1B69     		ldr	r3, [r3, #16]
- 416 023a 181C     		mov	r0, r3
- 417 023c FFF7FEFF 		bl	BitIoLdd3_SetVal
- 418 0240 09E0     		b	.L21
- 419              	.L20:
- 202:../Sources/ProcessorExpert.c **** 	} else
- 203:../Sources/ProcessorExpert.c **** 	{
- 204:../Sources/ProcessorExpert.c **** 		A13_ClrVal();	// turn off AC
- 420              		.loc 1 204 0
- 421 0242 1F4B     		ldr	r3, .L28+16
- 422 0244 DB68     		ldr	r3, [r3, #12]
+ 412 0232 FFF7FEFF 		bl	BitIoLdd3_SetVal
+ 413 0236 09E0     		b	.L22
+ 414              	.L21:
+ 200:../Sources/ProcessorExpert.c **** 	} else
+ 201:../Sources/ProcessorExpert.c **** 	{
+ 202:../Sources/ProcessorExpert.c **** 		A13_ClrVal();	// turn off AC
+ 415              		.loc 1 202 0
+ 416 0238 1D4B     		ldr	r3, .L29+16
+ 417 023a DB68     		ldr	r3, [r3, #12]
+ 418 023c 181C     		mov	r0, r3
+ 419 023e FFF7FEFF 		bl	BitIoLdd2_ClrVal
+ 203:../Sources/ProcessorExpert.c **** 		E5_ClrVal();	// turn off Therm
+ 420              		.loc 1 203 0
+ 421 0242 1B4B     		ldr	r3, .L29+16
+ 422 0244 1B69     		ldr	r3, [r3, #16]
  423 0246 181C     		mov	r0, r3
- 424 0248 FFF7FEFF 		bl	BitIoLdd2_ClrVal
- 205:../Sources/ProcessorExpert.c **** 		E5_ClrVal();	// turn off Therm
- 425              		.loc 1 205 0
- 426 024c 1C4B     		ldr	r3, .L28+16
- 427 024e 1B69     		ldr	r3, [r3, #16]
- 428 0250 181C     		mov	r0, r3
- 429 0252 FFF7FEFF 		bl	BitIoLdd3_ClrVal
- 430              	.L21:
- 206:../Sources/ProcessorExpert.c **** 	}
- 207:../Sources/ProcessorExpert.c **** 	
- 208:../Sources/ProcessorExpert.c **** 	/*
- 209:../Sources/ProcessorExpert.c **** 	 * print out values of analog signals
- 210:../Sources/ProcessorExpert.c **** 	 */
- 211:../Sources/ProcessorExpert.c **** 	for (i=0; i<ADC_CHANNELS_COUNT; i++) {
- 431              		.loc 1 211 0
- 432 0256 FB1D     		add	r3, r7, #7
- 433 0258 0022     		mov	r2, #0
- 434 025a 1A70     		strb	r2, [r3]
- 435 025c 0EE0     		b	.L22
- 436              	.L23:
- 212:../Sources/ProcessorExpert.c **** 		printf ("%7u", (uint16_t) MeasuredValues[i]);
- 437              		.loc 1 212 0
- 438 025e FB1D     		add	r3, r7, #7
- 439 0260 1A78     		ldrb	r2, [r3]
- 440 0262 1F4B     		ldr	r3, .L28+48
- 441 0264 5200     		lsl	r2, r2, #1
- 442 0266 D35A     		ldrh	r3, [r2, r3]
- 443 0268 284A     		ldr	r2, .L28+92
- 444 026a 101C     		mov	r0, r2
- 445 026c 191C     		mov	r1, r3
- 446 026e FFF7FEFF 		bl	printf
- 211:../Sources/ProcessorExpert.c **** 	for (i=0; i<ADC_CHANNELS_COUNT; i++) {
- 447              		.loc 1 211 0
- 448 0272 FB1D     		add	r3, r7, #7
- 449 0274 FA1D     		add	r2, r7, #7
- 450 0276 1278     		ldrb	r2, [r2]
- 451 0278 0132     		add	r2, r2, #1
- 452 027a 1A70     		strb	r2, [r3]
- 453              	.L22:
- 211:../Sources/ProcessorExpert.c **** 	for (i=0; i<ADC_CHANNELS_COUNT; i++) {
- 454              		.loc 1 211 0 is_stmt 0
- 455 027c FB1D     		add	r3, r7, #7
- 456 027e 1B78     		ldrb	r3, [r3]
- 457 0280 022B     		cmp	r3, #2
- 458 0282 ECD9     		bls	.L23
- 213:../Sources/ProcessorExpert.c **** 	}  	  
- 214:../Sources/ProcessorExpert.c **** 	printf ("\n");
- 459              		.loc 1 214 0 is_stmt 1
- 460 0284 0A20     		mov	r0, #10
- 461 0286 FFF7FEFF 		bl	putchar
- 215:../Sources/ProcessorExpert.c **** 	// wait for some time to slow down output
- 216:../Sources/ProcessorExpert.c **** 	TU1_ResetCounter(TU1_DeviceData);
- 462              		.loc 1 216 0
- 463 028a 0D4B     		ldr	r3, .L28+16
- 464 028c 5B68     		ldr	r3, [r3, #4]
- 465 028e 181C     		mov	r0, r3
- 466 0290 FFF7FEFF 		bl	TU1_ResetCounter
- 217:../Sources/ProcessorExpert.c **** 	while (TU1_GetCounterValue(TU1_DeviceData) < 50000) {}
- 467              		.loc 1 217 0
- 468 0294 C046     		mov	r8, r8
- 469              	.L24:
- 470              		.loc 1 217 0 is_stmt 0
- 471 0296 0A4B     		ldr	r3, .L28+16
- 472 0298 5B68     		ldr	r3, [r3, #4]
- 473 029a 181C     		mov	r0, r3
- 474 029c FFF7FEFF 		bl	TU1_GetCounterValue
- 475 02a0 021C     		mov	r2, r0
- 476 02a2 1B4B     		ldr	r3, .L28+96
- 477 02a4 9A42     		cmp	r2, r3
- 478 02a6 F6D9     		bls	.L24
- 218:../Sources/ProcessorExpert.c ****   } 
- 479              		.loc 1 218 0 is_stmt 1
- 480 02a8 C8E6     		b	.L25
- 481              	.L29:
- 482 02aa C046C046 		.align	3
- 482      C046
- 483              	.L28:
- 484 02b0 06DC90D2 		.word	-762258426
- 485 02b4 6E045040 		.word	1078985838
- 486 02b8 00000000 		.word	.LC0
- 487 02bc 00000000 		.word	Measured
- 488 02c0 00000000 		.word	PE_LDD_DeviceDataList
- 489 02c4 00000000 		.word	tooHotTeensy
- 490 02c8 00000000 		.word	comm
- 491 02cc 00000000 		.word	motion1
- 492 02d0 00000000 		.word	motion2
- 493 02d4 08000000 		.word	.LC8
- 494 02d8 18000000 		.word	.LC10
- 495 02dc 00800040 		.word	1073774592
- 496 02e0 00000000 		.word	MeasuredValues
- 497 02e4 00000000 		.word	ChannelsCfg2
- 498 02e8 00000000 		.word	ChannelsCfg
- 499 02ec 00000000 		.word	temp
- 500 02f0 0000AC42 		.word	1118568448
- 501 02f4 00000000 		.word	tooHotTherm
- 502 02f8 2C000000 		.word	.LC17
- 503 02fc 00000000 		.word	childInCar
- 504 0300 30750000 		.word	30000
- 505 0304 2F750000 		.word	29999
- 506 0308 00000000 		.word	childInSeat
- 507 030c 30000000 		.word	.LC21
- 508 0310 4FC30000 		.word	49999
- 509              		.cfi_endproc
- 510              	.LFE0:
- 512 0314 C046C046 		.text
- 513              	.Letext0:
- 514              		.file 2 "D:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
- 515              		.file 3 "C:/Users/Joshua Edwards/workspace/KL25_MultiADC_DMA/Generated_Code/PE_Types.h"
- 516              		.file 4 "D:/Freescale/CW MCU v10.7/MCU/ProcessorExpert/lib/Kinetis/iofiles/MKL25Z4.h"
+ 424 0248 FFF7FEFF 		bl	BitIoLdd3_ClrVal
+ 425              	.L22:
+ 204:../Sources/ProcessorExpert.c **** 	}
+ 205:../Sources/ProcessorExpert.c **** 	
+ 206:../Sources/ProcessorExpert.c **** 	/*
+ 207:../Sources/ProcessorExpert.c **** 	 * print out values of analog signals
+ 208:../Sources/ProcessorExpert.c **** 	 */
+ 209:../Sources/ProcessorExpert.c **** 	for (i=0; i<ADC_CHANNELS_COUNT; i++) {
+ 426              		.loc 1 209 0
+ 427 024c FB1D     		add	r3, r7, #7
+ 428 024e 0022     		mov	r2, #0
+ 429 0250 1A70     		strb	r2, [r3]
+ 430 0252 0EE0     		b	.L23
+ 431              	.L24:
+ 210:../Sources/ProcessorExpert.c **** 		printf ("%7u", (uint16_t) MeasuredValues[i]);
+ 432              		.loc 1 210 0
+ 433 0254 FB1D     		add	r3, r7, #7
+ 434 0256 1A78     		ldrb	r2, [r3]
+ 435 0258 1C4B     		ldr	r3, .L29+44
+ 436 025a 5200     		lsl	r2, r2, #1
+ 437 025c D35A     		ldrh	r3, [r2, r3]
+ 438 025e 264A     		ldr	r2, .L29+88
+ 439 0260 101C     		mov	r0, r2
+ 440 0262 191C     		mov	r1, r3
+ 441 0264 FFF7FEFF 		bl	printf
+ 209:../Sources/ProcessorExpert.c **** 	for (i=0; i<ADC_CHANNELS_COUNT; i++) {
+ 442              		.loc 1 209 0
+ 443 0268 FB1D     		add	r3, r7, #7
+ 444 026a FA1D     		add	r2, r7, #7
+ 445 026c 1278     		ldrb	r2, [r2]
+ 446 026e 0132     		add	r2, r2, #1
+ 447 0270 1A70     		strb	r2, [r3]
+ 448              	.L23:
+ 209:../Sources/ProcessorExpert.c **** 	for (i=0; i<ADC_CHANNELS_COUNT; i++) {
+ 449              		.loc 1 209 0 is_stmt 0
+ 450 0272 FB1D     		add	r3, r7, #7
+ 451 0274 1B78     		ldrb	r3, [r3]
+ 452 0276 022B     		cmp	r3, #2
+ 453 0278 ECD9     		bls	.L24
+ 211:../Sources/ProcessorExpert.c **** 	}  	  
+ 212:../Sources/ProcessorExpert.c **** 	printf ("\n");
+ 454              		.loc 1 212 0 is_stmt 1
+ 455 027a 0A20     		mov	r0, #10
+ 456 027c FFF7FEFF 		bl	putchar
+ 213:../Sources/ProcessorExpert.c **** 	// wait for some time to slow down output
+ 214:../Sources/ProcessorExpert.c **** 	TU1_ResetCounter(TU1_DeviceData);
+ 457              		.loc 1 214 0
+ 458 0280 0B4B     		ldr	r3, .L29+16
+ 459 0282 5B68     		ldr	r3, [r3, #4]
+ 460 0284 181C     		mov	r0, r3
+ 461 0286 FFF7FEFF 		bl	TU1_ResetCounter
+ 215:../Sources/ProcessorExpert.c **** 	while (TU1_GetCounterValue(TU1_DeviceData) < 50000) {}
+ 462              		.loc 1 215 0
+ 463 028a C046     		mov	r8, r8
+ 464              	.L25:
+ 465              		.loc 1 215 0 is_stmt 0
+ 466 028c 084B     		ldr	r3, .L29+16
+ 467 028e 5B68     		ldr	r3, [r3, #4]
+ 468 0290 181C     		mov	r0, r3
+ 469 0292 FFF7FEFF 		bl	TU1_GetCounterValue
+ 470 0296 021C     		mov	r2, r0
+ 471 0298 184B     		ldr	r3, .L29+92
+ 472 029a 9A42     		cmp	r2, r3
+ 473 029c F6D9     		bls	.L25
+ 216:../Sources/ProcessorExpert.c ****   } 
+ 474              		.loc 1 216 0 is_stmt 1
+ 475 029e CDE6     		b	.L26
+ 476              	.L30:
+ 477              		.align	3
+ 478              	.L29:
+ 479 02a0 06DC90D2 		.word	-762258426
+ 480 02a4 6E045040 		.word	1078985838
+ 481 02a8 00000000 		.word	.LC0
+ 482 02ac 00000000 		.word	Measured
+ 483 02b0 00000000 		.word	PE_LDD_DeviceDataList
+ 484 02b4 00000000 		.word	tooHotTeensy
+ 485 02b8 00000000 		.word	comm
+ 486 02bc 00000000 		.word	motion1
+ 487 02c0 08000000 		.word	.LC7
+ 488 02c4 18000000 		.word	.LC9
+ 489 02c8 00800040 		.word	1073774592
+ 490 02cc 00000000 		.word	MeasuredValues
+ 491 02d0 00000000 		.word	ChannelsCfg2
+ 492 02d4 00000000 		.word	ChannelsCfg
+ 493 02d8 00000000 		.word	temp
+ 494 02dc 0000AC42 		.word	1118568448
+ 495 02e0 00000000 		.word	tooHotTherm
+ 496 02e4 2C000000 		.word	.LC16
+ 497 02e8 00000000 		.word	childInCar
+ 498 02ec 30750000 		.word	30000
+ 499 02f0 2F750000 		.word	29999
+ 500 02f4 00000000 		.word	childInSeat
+ 501 02f8 30000000 		.word	.LC20
+ 502 02fc 4FC30000 		.word	49999
+ 503              		.cfi_endproc
+ 504              	.LFE0:
+ 506              		.text
+ 507              	.Letext0:
+ 508              		.file 2 "D:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 509              		.file 3 "C:/Users/Joshua Edwards/workspace/KL25_MultiADC_DMA/Generated_Code/PE_Types.h"
+ 510              		.file 4 "D:/Freescale/CW MCU v10.7/MCU/ProcessorExpert/lib/Kinetis/iofiles/MKL25Z4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 ProcessorExpert.c
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccp0Re2T.s:22     .rodata.ChannelsCfg:00000000 ChannelsCfg
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccp0Re2T.s:19     .rodata.ChannelsCfg:00000000 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccp0Re2T.s:32     .rodata.ChannelsCfg2:00000000 ChannelsCfg2
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccp0Re2T.s:29     .rodata.ChannelsCfg2:00000000 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccU8vMGf.s:22     .rodata.ChannelsCfg:00000000 ChannelsCfg
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccU8vMGf.s:19     .rodata.ChannelsCfg:00000000 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccU8vMGf.s:32     .rodata.ChannelsCfg2:00000000 ChannelsCfg2
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccU8vMGf.s:29     .rodata.ChannelsCfg2:00000000 $d
                             *COM*:00000006 MeasuredValues
                             *COM*:00000001 Measured
                             *COM*:00000001 childInSeat
                             *COM*:00000001 childInCar
                             *COM*:00000001 motion1
-                            *COM*:00000001 motion2
                             *COM*:00000001 tooHotTeensy
                             *COM*:00000001 tooHotTherm
                             *COM*:00000001 comm
                             *COM*:00000004 temp
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccp0Re2T.s:45     .rodata:00000000 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccp0Re2T.s:66     .text.main:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccp0Re2T.s:71     .text.main:00000000 main
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccp0Re2T.s:484    .text.main:000002b0 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccU8vMGf.s:44     .rodata:00000000 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccU8vMGf.s:65     .text.main:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccU8vMGf.s:70     .text.main:00000000 main
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccU8vMGf.s:479    .text.main:000002a0 $d
                      .debug_frame:00000010 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\ccp0Re2T.s:512    .text.main:00000314 $t
 
 UNDEFINED SYMBOLS
 __aeabi_i2d
@@ -775,7 +764,6 @@ DMA1_Init
 BitIoLdd6_GetVal
 BitIoLdd5_GetVal
 BitIoLdd8_GetVal
-BitIoLdd9_GetVal
 printf
 BitIoLdd1_SetVal
 BitIoLdd1_ClrVal

@@ -44,8 +44,6 @@
 #include "BitIoLdd7.h"
 #include "E2.h"
 #include "BitIoLdd8.h"
-#include "D2.h"
-#include "BitIoLdd9.h"
 #include "PE_LDD.h"
 
 void Cpu_OnNMIINT(void);

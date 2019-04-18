@@ -622,26 +622,26 @@
  353              		.file 4 "D:/Freescale/CW MCU v10.7/MCU/ProcessorExpert/lib/Kinetis/iofiles/MKL25Z4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 BitIoLdd8.c
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:18     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:21     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:24     .text.BitIoLdd8_Init:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:29     .text.BitIoLdd8_Init:00000000 BitIoLdd8_Init
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:92     .text.BitIoLdd8_Init:0000004c $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:101    .text.BitIoLdd8_SetDir:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:106    .text.BitIoLdd8_SetDir:00000000 BitIoLdd8_SetDir
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:155    .text.BitIoLdd8_SetDir:00000038 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:160    .text.BitIoLdd8_GetVal:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:165    .text.BitIoLdd8_GetVal:00000000 BitIoLdd8_GetVal
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:216    .text.BitIoLdd8_GetVal:00000038 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:221    .text.BitIoLdd8_PutVal:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:226    .text.BitIoLdd8_PutVal:00000000 BitIoLdd8_PutVal
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:269    .text.BitIoLdd8_PutVal:0000002c $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:274    .text.BitIoLdd8_ClrVal:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:279    .text.BitIoLdd8_ClrVal:00000000 BitIoLdd8_ClrVal
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:307    .text.BitIoLdd8_ClrVal:00000014 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:312    .text.BitIoLdd8_SetVal:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:317    .text.BitIoLdd8_SetVal:00000000 BitIoLdd8_SetVal
-C:\Users\JOSHUA~1\AppData\Local\Temp\cchdabKs.s:345    .text.BitIoLdd8_SetVal:00000014 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:18     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:21     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:24     .text.BitIoLdd8_Init:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:29     .text.BitIoLdd8_Init:00000000 BitIoLdd8_Init
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:92     .text.BitIoLdd8_Init:0000004c $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:101    .text.BitIoLdd8_SetDir:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:106    .text.BitIoLdd8_SetDir:00000000 BitIoLdd8_SetDir
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:155    .text.BitIoLdd8_SetDir:00000038 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:160    .text.BitIoLdd8_GetVal:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:165    .text.BitIoLdd8_GetVal:00000000 BitIoLdd8_GetVal
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:216    .text.BitIoLdd8_GetVal:00000038 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:221    .text.BitIoLdd8_PutVal:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:226    .text.BitIoLdd8_PutVal:00000000 BitIoLdd8_PutVal
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:269    .text.BitIoLdd8_PutVal:0000002c $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:274    .text.BitIoLdd8_ClrVal:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:279    .text.BitIoLdd8_ClrVal:00000000 BitIoLdd8_ClrVal
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:307    .text.BitIoLdd8_ClrVal:00000014 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:312    .text.BitIoLdd8_SetVal:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:317    .text.BitIoLdd8_SetVal:00000000 BitIoLdd8_SetVal
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccN1XC2v.s:345    .text.BitIoLdd8_SetVal:00000014 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

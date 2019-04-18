@@ -43,8 +43,6 @@
 #include "BitIoLdd7.h"
 #include "E2.h"
 #include "BitIoLdd8.h"
-#include "D2.h"
-#include "BitIoLdd9.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -77,7 +75,7 @@ uint16_t MeasuredValues[ADC_CHANNELS_COUNT];
 // flag for end of measurement
 bool Measured;
 bool childInSeat;
-bool childInCar, motion1, motion2;
+bool childInCar, motion1;
 bool tooHotTeensy, tooHotTherm;
 bool comm;
 float temp;
@@ -112,8 +110,7 @@ int main(void)
   while (TRUE) {
     tooHotTeensy = C17_GetVal();
     comm = C16_GetVal();
-    motion1 = E2_GetVal();			// right side of chair
-    motion2 = D2_GetVal();			// left side of chair
+    motion1 = E2_GetVal();			// PIR Motion Detector
     if(comm)
     {
     	printf("communicating\n");
@@ -152,7 +149,7 @@ int main(void)
 	/*
 	 * The following senses motion in car
 	 */
-	if (motion1 || motion2) childInCar = True;
+	if (motion1) childInCar = True;
 	else childInCar = False;
 	
 	/*
@@ -164,7 +161,7 @@ int main(void)
 	/*
 	 * if child is in seat tell transmitter
 	 */
-	if (childInSeat == True) A12_SetVal();	// A12 is to arduino sender HIGH
+	if (childInSeat || childInCar) A12_SetVal();	// A12 is to arduino sender HIGH
 	else A12_ClrVal();						// A12 is to arduino sender LOW
 	
 	/*
@@ -183,7 +180,7 @@ int main(void)
 	 * if the radio's can't communicate and the child is in the seat then
 	 * turn on the lights
 	 */
-	if(!comm && childInSeat)
+	if(!comm && (childInSeat || childInCar))
 	{
 		B9_SetVal(); // turn on lights
 	} else

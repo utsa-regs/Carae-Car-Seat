@@ -521,23 +521,23 @@
  286              		.file 4 "D:/Freescale/CW MCU v10.7/MCU/ProcessorExpert/lib/Kinetis/iofiles/MKL25Z4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 BitIoLdd2.c
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:18     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:21     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:24     .text.BitIoLdd2_Init:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:29     .text.BitIoLdd2_Init:00000000 BitIoLdd2_Init
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:93     .text.BitIoLdd2_Init:00000050 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:103    .text.BitIoLdd2_GetVal:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:108    .text.BitIoLdd2_GetVal:00000000 BitIoLdd2_GetVal
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:145    .text.BitIoLdd2_GetVal:00000024 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:150    .text.BitIoLdd2_PutVal:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:155    .text.BitIoLdd2_PutVal:00000000 BitIoLdd2_PutVal
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:200    .text.BitIoLdd2_PutVal:00000030 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:205    .text.BitIoLdd2_ClrVal:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:210    .text.BitIoLdd2_ClrVal:00000000 BitIoLdd2_ClrVal
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:239    .text.BitIoLdd2_ClrVal:00000018 $d
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:244    .text.BitIoLdd2_SetVal:00000000 $t
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:249    .text.BitIoLdd2_SetVal:00000000 BitIoLdd2_SetVal
-C:\Users\JOSHUA~1\AppData\Local\Temp\cc3Tnzrq.s:278    .text.BitIoLdd2_SetVal:00000018 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:18     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:21     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:24     .text.BitIoLdd2_Init:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:29     .text.BitIoLdd2_Init:00000000 BitIoLdd2_Init
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:93     .text.BitIoLdd2_Init:00000050 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:103    .text.BitIoLdd2_GetVal:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:108    .text.BitIoLdd2_GetVal:00000000 BitIoLdd2_GetVal
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:145    .text.BitIoLdd2_GetVal:00000024 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:150    .text.BitIoLdd2_PutVal:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:155    .text.BitIoLdd2_PutVal:00000000 BitIoLdd2_PutVal
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:200    .text.BitIoLdd2_PutVal:00000030 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:205    .text.BitIoLdd2_ClrVal:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:210    .text.BitIoLdd2_ClrVal:00000000 BitIoLdd2_ClrVal
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:239    .text.BitIoLdd2_ClrVal:00000018 $d
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:244    .text.BitIoLdd2_SetVal:00000000 $t
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:249    .text.BitIoLdd2_SetVal:00000000 BitIoLdd2_SetVal
+C:\Users\JOSHUA~1\AppData\Local\Temp\ccT6Tsgw.s:278    .text.BitIoLdd2_SetVal:00000018 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

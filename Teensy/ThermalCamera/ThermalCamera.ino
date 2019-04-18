@@ -24,8 +24,8 @@
 
   Pinouts
   MCU         Device
-  A4          AMG SDA
-  A5          AMG SCL
+  A4          AMG SDA (orng/wht)
+  A5          AMG SCL (grn)
   Gnd         Dispaly GND, AMG Gnd
   3v3         Dispaly Vcc,Display LED,Display RST, AMG Vcc
   2           Dispaly T_CLK
@@ -50,6 +50,8 @@
 //#include <UTouch.h>                 // touchscreen lib
 #include "Arduino.h"
 #include "HW_AVR_defines.h"
+
+
 #define PIN_CS 10                   // chip select for the display
 #define PIN_DC 9                    // d/c pin for the display
 
