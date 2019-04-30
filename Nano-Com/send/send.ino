@@ -13,33 +13,34 @@
 #include <RF24.h>
 #include <nRF24L01.h>
 #include <RF24_config.h>
-#include <SoftwareSerial.h>
-#include <SIM808.h>
+//#include <SoftwareSerial.h>
+//#include <SIM808.h>
+//#include <ArduinoLog.h>
 
 #define CE_PIN   14
 #define CSN_PIN  10
 #define CHILD_PIN  4            // input from KL25Z (child status)
 #define CSTATUS_PIN 5           // output to KL25z (comms)
-#define SIM_RST		15	            // SIM808 RESET
-#define SIM_RX		0	            // SIM808 RXD
-#define SIM_TX		1	            // SIM808 TXD
-#define SIM_PWR		6	            // SIM808 PWRKEY
-#define SIM_STATUS	7	          // SIM808 STATUS
+//#define SIM_RST		6	            // SIM808 RESET
+// #define SIM_RX		0	            // SIM808 RXD
+// #define SIM_TX		1	            // SIM808 TXD
+// #define SIM_PWR		15	            // SIM808 PWRKEY
+// #define SIM_STATUS	7	          // SIM808 STATUS
 
-#define SIM808_BAUDRATE 4800
+//#define SIM808_BAUDRATE 4800
 
 /* Hardware configuration: Set up nRF24L01 radio on SPI bus plus pins 14 & 10 */
 RF24 radio(CE_PIN, CSN_PIN);
 /**********************************************************/
 
-SoftwareSerial simSerial = SoftwareSerial(SIM_TX, SIM_RX)
-SIM808 sim808 = SIM808(SIM_RST, SIM_PWR, SIM_STATUS);
+// SoftwareSerial simSerial = SoftwareSerial(SIM_RX, SIM_TX);
+// SIM808 sim808 = SIM808(SIM_RST, SIM_PWR, SIM_STATUS);
 
 byte addresses[2][6] = { "Node1", "Node2" };
 bool childInCar = true;
 bool comm;
 bool x = false;
-bool movement1 = false, movement2 = false;
+// bool movement1 = false, movement2 = false;
 unsigned long currMillis;
 unsigned long prevMillis;
 unsigned long txIntervalMillis = 5000;  // check for 5 second gap
@@ -48,8 +49,9 @@ void setup()
 {
   pinMode(CSTATUS_PIN, OUTPUT);
   pinMode(CHILD_PIN, INPUT);
-  pinMode(PIR1_PIN, INPUT);
-  pinMode(PIR2_PIN, INPUT);
+  // pinMode(SIM_PWR, OUTPUT);
+  // pinMode(SIM_RX, INPUT);
+  // pinMode(SIM_TX, OUTPUT);
   Serial.begin(9600);
   Serial.println(F("Transmitter."));
 
@@ -68,19 +70,25 @@ void setup()
   radio.openWritingPipe(addresses[0]);
   radio.openReadingPipe(1, addresses[1]);
 
-  simSerial.begin(SIM808_BAUDRATE);
-  sim808.begin(simSerial);
-
-  sim808.powerOnOff(true);    //power on the SIM808. Unavailable without the PWRKEY pin wired
-  sim808.init();
+  // Serial.println(F("Starting Cell Comms."));
+  // simSerial.begin(SIM808_BAUDRATE);
+  // sim808.begin(simSerial);
+  // delay(1000);
+  // Serial.println(F("Turning on Modem."));
+  //digitalWrite(SIM_PWR, LOW);
+  //delay(1500);
+  //digitalWrite(SIM_PWR, HIGH);
+  // sim808.powerOnOff(true);    //power on the SIM808. Unavailable without the PWRKEY pin wired
+  // sim808.init();
+  // Serial.println(F("Finished booting up."));
 }
 
 void loop()
 {
   childInCar = digitalRead(CHILD_PIN);
   /* The following code is to test the PIR sensors */
-  if (movement2) Serial.println(F("PIR is true."));
-  else Serial.println(F("PIR is false."));
+  // if (movement2) Serial.println(F("PIR is true."));
+  // else Serial.println(F("PIR is false."));
   if (childInCar)
   {
     Serial.println(F("Baby is in the seat."));
